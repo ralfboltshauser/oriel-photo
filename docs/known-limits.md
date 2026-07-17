@@ -1,6 +1,6 @@
 # Known limits
 
-Last reviewed: 2026-07-17.
+Last reviewed: 2026-07-18.
 
 This file is part of the product contract. Remove an item only after the behavior exists and has
 evidence appropriate to its risk.
@@ -76,6 +76,25 @@ new shoot, not as the sole home for an established archive.
 - Package metadata points to the public GitHub repository and a GitHub noreply maintainer address;
   this does not imply that the Oriel name or broader product identity has been legally cleared.
 - The project is not claiming production stability, archival safety, or feature parity with Lightroom.
+
+## Interface feedback
+
+- Feedback mode opens a prefilled public issue draft in the system browser. It does not automatically
+  create an issue, and the user must review and submit the form on GitHub.
+- Opening the draft sends the prefilled fields to GitHub in the URL before an issue exists, and the
+  browser may retain that URL in its history.
+- Oriel has no GitHub account integration and never handles a GitHub token. Submitting as the user
+  therefore depends on the browser being signed in to a GitHub account that can create an issue in
+  the public repository.
+- Feedback is text-only. Oriel deliberately does not attach screenshots, photos, filenames,
+  filesystem paths, EXIF, catalog content, visible DOM text, or a DOM copy.
+- Safe app, operating-system, workspace, view, viewport, and bounds context is optional. The semantic
+  interface-target description is always included so maintainers can locate the element.
+- The feedback note is limited to 1,200 characters, individual prefill fields have defensive limits,
+  and the complete encoded URL is limited to 7,500 characters. Very long or heavily encoded feedback
+  must be shortened before GitHub can be opened.
+- Draft opening depends on the operating system's browser handoff and GitHub availability. Oriel
+  cannot confirm whether the user ultimately submitted, edited, abandoned, or duplicated the issue.
 
 ## Deliberate non-goals for the first slice
 

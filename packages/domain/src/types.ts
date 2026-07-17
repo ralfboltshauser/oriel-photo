@@ -120,6 +120,13 @@ export interface ExportResult {
   path: string | null;
 }
 
+export interface FeedbackIssueDraft {
+  title: string;
+  feedback: string;
+  target: string;
+  context: string;
+}
+
 export interface OrielDesktopBridge {
   platform: 'darwin' | 'win32' | 'linux' | 'web';
   importFolder: () => Promise<ImportScanResult | null>;
@@ -128,6 +135,7 @@ export interface OrielDesktopBridge {
   chooseExportDirectory: () => Promise<ExportDestination | null>;
   saveExport: (request: ExportRequest) => Promise<ExportResult>;
   showInFolder: (path: string) => Promise<void>;
+  openFeedbackIssue: (draft: FeedbackIssueDraft) => Promise<void>;
   getDiagnostics: () => Promise<Record<string, string>>;
   registerCloseHandler: (handler: () => Promise<void>) => () => void;
 }

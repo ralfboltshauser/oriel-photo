@@ -38,7 +38,7 @@ export function DeliveryWorkspace() {
 
   const readyToExport = picks.length > 0 && availability === 'ready' && saveStatus === 'saved';
   return (
-    <div className="delivery-workspace">
+    <div className="delivery-workspace" data-feedback="delivery.workspace">
       <header>
         <p className="eyebrow">Ready when you are</p>
         <h1>Deliver with confidence.</h1>
@@ -70,6 +70,7 @@ export function DeliveryWorkspace() {
           </div>
           <Button
             disabled={!readyToExport}
+            data-feedback="delivery.export-picks"
             icon={<Send size={14} />}
             onClick={() => setExportOpen(true)}
             variant="primary"

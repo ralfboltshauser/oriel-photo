@@ -52,3 +52,11 @@ test('@a11y export dialog passes automated WCAG checks', async ({ page }) => {
   await expect(page.getByRole('dialog', { name: 'Export photographs' })).toBeVisible();
   await expectNoA11yViolations(page, 'Export dialog');
 });
+
+test('@a11y feedback composer passes automated WCAG checks', async ({ page }) => {
+  await openSampleLibrary(page);
+  await page.keyboard.press('Control+Shift+f');
+  await page.locator('[data-feedback="topbar.export"]').click();
+  await expect(page.getByRole('dialog', { name: 'Feedback on Export' })).toBeVisible();
+  await expectNoA11yViolations(page, 'Feedback composer');
+});

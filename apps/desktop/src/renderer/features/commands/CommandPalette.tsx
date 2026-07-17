@@ -7,6 +7,7 @@ import {
   CopyPlus,
   FolderOpen,
   Images,
+  MessageSquarePlus,
   PanelLeftClose,
   ScanSearch,
   Send,
@@ -17,6 +18,7 @@ import { toast } from 'sonner';
 
 import { desktopBridge } from '../../lib/bridge';
 import { useCatalogStore } from '../../store/catalog-store';
+import { useFeedbackModeStore } from '../feedback/feedback-store';
 
 interface PaletteAction {
   label: string;
@@ -38,6 +40,7 @@ export function CommandPalette() {
   const copyEdits = useCatalogStore((state) => state.copyEdits);
   const pasteEdits = useCatalogStore((state) => state.pasteEdits);
   const setExportOpen = useCatalogStore((state) => state.setExportOpen);
+  const setFeedbackActive = useFeedbackModeStore((state) => state.setActive);
 
   const actions: PaletteAction[] = [
     {
@@ -118,6 +121,13 @@ export function CommandPalette() {
       shortcut: 'Tab',
       icon: <PanelLeftClose size={15} />,
       run: togglePanels,
+    },
+    {
+      label: 'Give interface feedback',
+      keywords: 'report annotate point issue github bug suggestion',
+      shortcut: desktopBridge.platform === 'darwin' ? '⇧⌘F' : 'Ctrl ⇧ F',
+      icon: <MessageSquarePlus size={15} />,
+      run: () => setFeedbackActive(true),
     },
     {
       label: 'Copy diagnostics',

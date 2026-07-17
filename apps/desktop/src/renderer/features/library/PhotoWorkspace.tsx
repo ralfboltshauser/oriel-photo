@@ -20,8 +20,8 @@ export function PhotoWorkspace() {
   const version = getActiveVersion(photo);
 
   return (
-    <div className="photo-workspace">
-      <div className="photo-stage">
+    <div className="photo-workspace" data-feedback="photo.workspace">
+      <div className="photo-stage" data-feedback="photo.stage">
         <PhotoCanvas
           adjustments={version.adjustments}
           fileName={photo.fileName}

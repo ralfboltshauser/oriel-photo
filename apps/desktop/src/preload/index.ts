@@ -5,6 +5,7 @@ import type {
   ExportDestination,
   ExportRequest,
   ExportResult,
+  FeedbackIssueDraft,
   ImportScanResult,
   OrielDesktopBridge,
 } from '@oriel/domain';
@@ -22,6 +23,8 @@ const bridge: OrielDesktopBridge = {
     ipcRenderer.invoke('oriel:export:save', request) as Promise<ExportResult>,
   showInFolder: (path: string) =>
     ipcRenderer.invoke('oriel:platform:show-item', path) as Promise<void>,
+  openFeedbackIssue: (draft: FeedbackIssueDraft) =>
+    ipcRenderer.invoke('oriel:feedback:open-issue', draft) as Promise<void>,
   getDiagnostics: () =>
     ipcRenderer.invoke('oriel:diagnostics:get') as Promise<Record<string, string>>,
   registerCloseHandler: (handler) => {

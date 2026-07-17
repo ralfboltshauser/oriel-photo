@@ -30,7 +30,13 @@ export function Filmstrip() {
   }, [activeId]);
 
   return (
-    <div aria-label="Filmstrip" className="filmstrip" ref={stripRef} role="listbox">
+    <div
+      aria-label="Filmstrip"
+      className="filmstrip"
+      data-feedback="photo.filmstrip"
+      ref={stripRef}
+      role="listbox"
+    >
       {firstIndex > 0 ? (
         <div
           aria-hidden="true"
@@ -43,6 +49,7 @@ export function Filmstrip() {
           aria-label={photo.fileName}
           aria-selected={photo.id === activeId}
           className="filmstrip-item"
+          data-feedback="photo.filmstrip-item"
           data-photo-id={photo.id}
           key={photo.id}
           onClick={() => selectPhoto(photo.id)}

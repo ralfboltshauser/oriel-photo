@@ -16,7 +16,7 @@ export function AppShell() {
   const showInspector = catalog.workspace === 'edit' && selected && !catalog.panelsHidden;
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-feedback="app.shell">
       <TitleBar />
       <div className="app-body" data-panels-hidden={catalog.panelsHidden}>
         <StageRail />

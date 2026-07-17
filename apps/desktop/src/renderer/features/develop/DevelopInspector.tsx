@@ -34,16 +34,23 @@ function Section({
   title,
   children,
   onReset,
+  feedbackId,
 }: {
   title: string;
   children: React.ReactNode;
   onReset: () => void;
+  feedbackId: string;
 }) {
   return (
-    <section className="inspector-section">
+    <section className="inspector-section" data-feedback={feedbackId}>
       <header>
         <span>{title}</span>
-        <button aria-label={`Reset ${title}`} onClick={onReset} type="button">
+        <button
+          aria-label={`Reset ${title}`}
+          data-feedback={`${feedbackId}.reset`}
+          onClick={onReset}
+          type="button"
+        >
           <RotateCcw size={12} />
         </button>
       </header>
@@ -79,6 +86,7 @@ export function DevelopInspector({
     format?: (value: number) => string,
   ) => (
     <SliderField
+      feedbackId={`edit.${key}`}
       formatValue={format}
       label={label}
       max={max}
@@ -95,7 +103,7 @@ export function DevelopInspector({
   );
 
   return (
-    <aside className="develop-inspector">
+    <aside className="develop-inspector" data-feedback="edit.inspector">
       <div className="inspector-heading">
         <div>
           <small>Editing</small>
@@ -104,6 +112,7 @@ export function DevelopInspector({
         <div className="version-control">
           <select
             aria-label="Active version"
+            data-feedback="edit.version-selector"
             onChange={(event) => selectVersion(event.target.value)}
             value={version.id}
           >
@@ -115,6 +124,7 @@ export function DevelopInspector({
           </select>
           <button
             aria-label="Create version"
+            data-feedback="edit.create-version"
             onClick={() => {
               createVersion();
               toast.success('New version created');
@@ -128,6 +138,7 @@ export function DevelopInspector({
 
       <div className="inspector-quick-actions">
         <Button
+          data-feedback="edit.copy"
           icon={<Copy size={13} />}
           onClick={() => {
             copyEdits();
@@ -138,6 +149,7 @@ export function DevelopInspector({
           Copy
         </Button>
         <Button
+          data-feedback="edit.paste"
           disabled={!copied}
           onClick={() => {
             pasteEdits();
@@ -152,7 +164,7 @@ export function DevelopInspector({
       </div>
 
       <div className="inspector-scroll">
-        <Section onReset={() => reset(lightKeys)} title="Light">
+        <Section feedbackId="edit.section.light" onReset={() => reset(lightKeys)} title="Light">
           {field(
             'exposure',
             'Exposure',
@@ -172,6 +184,7 @@ export function DevelopInspector({
           ) : (
             <button
               className="reveal-controls"
+              data-feedback="edit.reveal-light-controls"
               onClick={() => setFullLight(true)}
               type="button"
             >
@@ -180,12 +193,16 @@ export function DevelopInspector({
           )}
         </Section>
 
-        <Section onReset={() => reset(colorKeys)} title="Color">
+        <Section feedbackId="edit.section.color" onReset={() => reset(colorKeys)} title="Color">
           {field('temperature', 'Temperature', -100, 100)}
           {field('tint', 'Tint', -100, 100)}
           {field('vibrance', 'Vibrance', -100, 100)}
           {field('saturation', 'Saturation', -100, 100)}
-          <label className="mono-toggle" htmlFor="oriel-monochrome">
+          <label
+            className="mono-toggle"
+            data-feedback="edit.monochrome"
+            htmlFor="oriel-monochrome"
+          >
             <i aria-hidden="true" />
             Monochrome
             <input
@@ -200,9 +217,14 @@ export function DevelopInspector({
           </label>
         </Section>
 
-        <Section onReset={() => reset(['crop'])} title="Crop & rotate">
+        <Section
+          feedbackId="edit.section.crop-rotate"
+          onReset={() => reset(['crop'])}
+          title="Crop & rotate"
+        >
           <SegmentedControl
             ariaLabel="Crop aspect ratio"
+            feedbackId="edit.crop-aspect"
             onChange={(aspect) => {
               update('crop', { ...a.crop, aspect });
               commit();
@@ -216,6 +238,7 @@ export function DevelopInspector({
             value={a.crop.aspect}
           />
           <Button
+            data-feedback="edit.rotate"
             icon={<Crop size={13} />}
             onClick={() => {
               update('crop', {

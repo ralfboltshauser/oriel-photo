@@ -26,6 +26,8 @@ These are user-facing contracts, not optional implementation details:
 7. Unsupported formats are named before import; they do not silently disappear.
 8. The same adjustment recipe drives preview and JPEG export, within the limits of the current image
    engine.
+9. Feedback mode never needs a GitHub token and never treats opening a browser draft as submitting an
+   issue.
 
 ## Primary journey: finish one shoot
 
@@ -98,6 +100,31 @@ reported untouched.
   and selection.
 - Missing-source handling is not complete yet; until it is, recovery claims must remain limited to
   normal restarts with source files still available.
+
+### 8. Give interface feedback
+
+**Entry:** press `Cmd+Shift+F` on macOS or `Ctrl+Shift+F` elsewhere, or choose “Give interface
+feedback” from the command palette.
+
+- Feedback mode highlights the interface target under the pointer. Clicking locks that target without
+  activating its normal action.
+- A keyboard user can move through registered targets with the arrow keys and press Enter to select
+  one.
+- The composer asks for one specific observation and shows the semantic target information that will
+  be included.
+- App version, operating system, workspace, view, viewport, and target bounds are optional context.
+  The user can review this context and turn it off before continuing.
+- “Review on GitHub” opens a prefilled issue draft in the default browser. Oriel does not request,
+  store, or transmit a GitHub token.
+- The browser's signed-in GitHub account owns the issue only after the user reviews the public form
+  and presses “Submit new issue.” Opening the draft alone creates nothing.
+
+**Privacy:** Oriel sends the user's note, a sanitized semantic target description, and only the safe
+context the user chose. It does not attach a photo, screenshot, filename, filesystem path, EXIF,
+catalog content, visible DOM text, or a DOM copy.
+
+**Recovery:** Escape closes the composer back to targeting, then exits Feedback mode. After opening a
+draft, the user can open it again, annotate another target, or exit.
 
 ## Progressive discovery model
 

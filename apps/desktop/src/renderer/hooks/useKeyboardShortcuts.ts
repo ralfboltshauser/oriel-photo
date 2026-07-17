@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
+import { useFeedbackModeStore } from '../features/feedback/feedback-store';
 import { useCatalogStore } from '../store/catalog-store';
 
 function isTextEditing(target: EventTarget | null): boolean {
@@ -27,8 +28,21 @@ export function useKeyboardShortcuts() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.defaultPrevented) return;
       const state = useCatalogStore.getState();
+      const feedback = useFeedbackModeStore.getState();
       const mod = event.metaKey || event.ctrlKey;
       const modalOpen = state.commandOpen || state.exportOpen || state.importScan !== null;
+
+      if (
+        mod &&
+        event.shiftKey &&
+        event.key.toLowerCase() === 'f' &&
+        !isTextEditing(event.target)
+      ) {
+        event.preventDefault();
+        feedback.toggle();
+        return;
+      }
+      if (feedback.active) return;
 
       if (
         mod &&

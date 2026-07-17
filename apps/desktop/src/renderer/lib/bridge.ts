@@ -1,4 +1,8 @@
-import type { CatalogDocument, OrielDesktopBridge } from '@oriel/domain';
+import {
+  createFeedbackIssueUrl,
+  type CatalogDocument,
+  type OrielDesktopBridge,
+} from '@oriel/domain';
 
 const STORAGE_KEY = 'oriel-browser-catalog-v1';
 
@@ -28,6 +32,14 @@ const browserBridge: OrielDesktopBridge = {
     return Promise.resolve({ canceled: false, path: `Downloads/${request.fileName}` });
   },
   showInFolder: () => Promise.resolve(),
+  openFeedbackIssue: (draft) => {
+    const anchor = document.createElement('a');
+    anchor.href = createFeedbackIssueUrl(draft);
+    anchor.rel = 'noopener noreferrer';
+    anchor.target = '_blank';
+    anchor.click();
+    return Promise.resolve();
+  },
   getDiagnostics: () =>
     Promise.resolve({
       appVersion: 'browser harness',
@@ -49,6 +61,7 @@ const unavailableBridge: OrielDesktopBridge = {
   chooseExportDirectory: rejectNativeBridge,
   saveExport: rejectNativeBridge,
   showInFolder: rejectNativeBridge,
+  openFeedbackIssue: rejectNativeBridge,
   getDiagnostics: rejectNativeBridge,
   registerCloseHandler: () => () => undefined,
 };

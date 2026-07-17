@@ -35,6 +35,17 @@ test('@visual captures the critical product surfaces', async ({ page }) => {
   await expect(page).toHaveScreenshot('06-export.png');
   await page.getByRole('button', { name: 'Close export' }).click();
 
+  await page.keyboard.press('Control+Shift+f');
+  const exposureTarget = page.locator('[data-feedback="edit.exposure"]');
+  await exposureTarget.hover();
+  await exposureTarget.click();
+  await page
+    .getByLabel('What should change?')
+    .fill('Make the current value easier to compare with the starting point.');
+  await expect(page).toHaveScreenshot('08-feedback-composer.png');
+  await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await page.getByRole('button', { name: 'Exit feedback mode' }).click();
+
   await page.setViewportSize({ width: 1100, height: 740 });
   await waitForVisualReady(page);
   await expect(page).toHaveScreenshot('07-edit-compact.png');

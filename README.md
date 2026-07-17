@@ -13,7 +13,9 @@ This repository is proving one honest vertical slice:
 3. make non-destructive essential edits;
 4. create and compare versions;
 5. export a rendered JPEG while leaving the original untouched;
-6. reopen the app and recover catalog state.
+6. reopen the app and recover catalog state;
+7. point to an interface element and open a reviewable, prefilled GitHub feedback draft without
+   giving Oriel GitHub credentials.
 
 The current image engine handles JPEG, PNG, and WebP with approximate Canvas-based adjustments. RAW
 decoding, professional color parity, Lightroom migration, and production releases do not exist yet.
@@ -55,6 +57,11 @@ pnpm package:linux
 
 Packaging targets are configured for macOS, Windows, and Linux; local validation is currently
 Linux-only. Configuration is not a release claim.
+
+Press `Cmd+Shift+F` on macOS or `Ctrl+Shift+F` elsewhere to enter Feedback mode. The same action is
+available as “Give interface feedback” in the command palette. Feedback mode opens a public GitHub
+draft in the default browser; the user reviews and submits it there, so opening the draft does not
+itself create an issue.
 
 ## Project notes
 

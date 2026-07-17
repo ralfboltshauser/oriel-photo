@@ -9,7 +9,7 @@ export function TitleBar() {
   const sourceName = sources[0]?.name ?? 'No source';
 
   return (
-    <header className="window-titlebar">
+    <header className="window-titlebar" data-feedback="app.titlebar">
       <div className="titlebar-brand">
         <BrandMark size={24} />
         <span>Oriel</span>

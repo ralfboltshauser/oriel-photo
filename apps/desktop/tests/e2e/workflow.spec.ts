@@ -142,3 +142,98 @@ test.describe('local photo workflow', () => {
     await expect(page.getByText('Untouched')).toBeVisible();
   });
 });
+
+test.describe('interface feedback', () => {
+  test('captures a safe target and opens a truthful prefilled GitHub draft', async ({
+    context,
+    page,
+  }) => {
+    await context.route('https://github.com/**', async (route) => {
+      await route.fulfill({
+        body: '<!doctype html><title>GitHub issue draft</title>',
+        contentType: 'text/html',
+        status: 200,
+      });
+    });
+    await openSampleLibrary(page);
+
+    const exportButton = page.locator('[data-feedback="topbar.export"]');
+    await page.keyboard.press('Control+Shift+f');
+    await expect(page.getByRole('status')).toContainText('Feedback mode');
+
+    await exportButton.hover();
+    await expect(page.locator('.feedback-highlight span')).toHaveText('Export');
+    await exportButton.click();
+
+    const composer = page.getByRole('dialog', { name: 'Feedback on Export' });
+    await expect(composer).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'Export photographs' })).toHaveCount(0);
+
+    const note = 'Keep this action visible while I compare several photographs.';
+    await composer.getByLabel('What should change?').fill(note);
+    await composer.getByText('Review captured context').click();
+
+    const capturedContext = composer.locator('.feedback-context pre');
+    await expect(capturedContext).toContainText('Semantic ID: topbar.export');
+    await expect(capturedContext).toContainText('Workspace: library');
+    await expect(capturedContext).toContainText(
+      'Privacy: no photo, filename, path, EXIF, catalog content, or screenshot is attached.',
+    );
+    await expect(capturedContext).not.toContainText('ORL_');
+    await expect(capturedContext).not.toContainText('Alpine weekend');
+
+    const popupPromise = page.waitForEvent('popup');
+    await composer.getByRole('button', { name: 'Review on GitHub' }).click();
+    const popup = await popupPromise;
+    await popup.waitForLoadState('domcontentloaded');
+
+    const issueUrl = new URL(popup.url());
+    expect(issueUrl.origin).toBe('https://github.com');
+    expect(issueUrl.pathname).toBe('/ralfboltshauser/oriel-photo/issues/new');
+    expect(issueUrl.searchParams.get('template')).toBe('interface-feedback.yml');
+    expect(issueUrl.searchParams.get('title')).toBe('[Interface feedback] Export');
+    expect(issueUrl.searchParams.get('feedback')).toBe(note);
+    expect(issueUrl.searchParams.get('target')).toContain('Semantic ID: topbar.export');
+    expect(issueUrl.searchParams.get('context')).toContain('Workspace: library');
+    expect(
+      `${issueUrl.searchParams.get('target')}\n${issueUrl.searchParams.get('context')}`,
+    ).not.toMatch(/ORL_|Alpine weekend/);
+
+    const confirmation = page.getByRole('dialog', { name: 'GitHub draft opened' });
+    await expect(confirmation).toBeVisible();
+    await expect(confirmation).toContainText(
+      'No issue exists until you press “Submit new issue.”',
+    );
+
+    await popup.close();
+    await confirmation.getByRole('button', { name: 'Exit feedback' }).click();
+    await expect(page.getByRole('status')).toHaveCount(0);
+  });
+
+  test('supports keyboard target selection and command palette discovery', async ({ page }) => {
+    await openSampleLibrary(page);
+
+    await page.keyboard.press('Control+Shift+f');
+    await page.keyboard.press('Tab');
+    await expect(page.locator('.feedback-highlight span')).toBeVisible();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('.feedback-highlight span')).toBeVisible();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('.feedback-composer')).toBeVisible();
+    await expect(page.locator('.feedback-target-card strong')).not.toBeEmpty();
+
+    await page.keyboard.press('Escape');
+    await expect(page.locator('.feedback-composer')).toHaveCount(0);
+    await expect(page.getByRole('status')).toContainText('Point at anything');
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('status')).toHaveCount(0);
+
+    await page.keyboard.press('Control+k');
+    const commandInput = page.getByPlaceholder('Find a tool or action…');
+    await commandInput.fill('interface feedback');
+    await page.getByText('Give interface feedback', { exact: true }).click();
+    await expect(page.getByRole('status')).toContainText('Feedback mode');
+    await page.getByRole('button', { name: 'Exit feedback mode' }).click();
+    await expect(page.getByRole('status')).toHaveCount(0);
+  });
+});

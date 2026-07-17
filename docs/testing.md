@@ -6,16 +6,16 @@ strategy prioritizes those contracts over raw test count.
 
 ## Feedback layers
 
-| Layer                 | Purpose                                                            | Expected command                 |
-| --------------------- | ------------------------------------------------------------------ | -------------------------------- |
-| Formatting and lint   | Keep diffs legible and catch unsafe/UI patterns                    | `pnpm format:check`, `pnpm lint` |
-| Type boundaries       | Keep domain and preload contracts aligned                          | `pnpm typecheck`                 |
-| Domain unit tests     | Catalog defaults, merge, versions, filters, recipes                | `pnpm test:unit`                 |
-| Browser product tests | Fast onboarding, culling, editing, command, and export-state flows | `pnpm test:e2e`                  |
-| Accessibility scan    | Semantics, focusability, and obvious violations                    | `pnpm test:a11y`                 |
-| Visual snapshots      | Stable key screens at standard and compact sizes                   | `pnpm test:visual`               |
-| Electron smoke        | Real preload bridge, persistence, protocols, and app launch        | desktop test target              |
-| Packaged smoke        | Install/launch/import/export/reopen the distributable              | each release OS                  |
+| Layer                 | Purpose                                                                 | Expected command                 |
+| --------------------- | ----------------------------------------------------------------------- | -------------------------------- |
+| Formatting and lint   | Keep diffs legible and catch unsafe/UI patterns                         | `pnpm format:check`, `pnpm lint` |
+| Type boundaries       | Keep domain and preload contracts aligned                               | `pnpm typecheck`                 |
+| Domain unit tests     | Catalog defaults, merge, versions, filters, recipes                     | `pnpm test:unit`                 |
+| Browser product tests | Fast onboarding, culling, editing, commands, feedback, and export flows | `pnpm test:e2e`                  |
+| Accessibility scan    | Semantics, focusability, and obvious violations                         | `pnpm test:a11y`                 |
+| Visual snapshots      | Stable key screens at standard and compact sizes                        | `pnpm test:visual`               |
+| Electron smoke        | Real preload bridge, persistence, protocols, and app launch             | desktop test target              |
+| Packaged smoke        | Install/launch/import/export/reopen the distributable                   | each release OS                  |
 
 Commands describe the intended repository interface; a command is not evidence of a passing gate
 until it has run in the current revision.
@@ -35,6 +35,23 @@ until it has run in the current revision.
     copy → no `.oriel-partial` remains.
 11. Interrupt export → current file finishes, future files do not start, UI explains the result.
 12. Rename/unmount a source → clear offline handling and relink path (this remains a missing scenario).
+13. Enter Feedback mode by shortcut and command palette → pointer click is intercepted → selected
+    target opens the composer → GitHub draft contains the expected template, note, target, and chosen
+    safe context → no issue is claimed to exist before browser submission.
+14. Navigate Feedback mode with arrows and Enter; Escape returns from composing to targeting and then
+    exits; the ordinary product shortcuts do not leak through while the mode is active.
+
+Feedback tests must treat privacy as a negative contract. Seed the page with a distinctive filename,
+filesystem path, DOM text, EXIF value, and catalog value, then assert that none appears in the target
+snapshot or GitHub URL. Assert that no image bytes or screenshot are created. Test both context-on and
+context-off drafts, the required-field limits, control-character cleaning, and the 7,500-character URL
+limit.
+
+Browser tests may intercept the GitHub popup and inspect its URL. At the Electron boundary, capture
+the constructed URL instead of opening a real browser, then assert the exact host and path are
+`github.com/ralfboltshauser/oriel-photo/issues/new`; arbitrary renderer-provided destinations must be
+impossible. These tests prove draft construction and handoff, not GitHub authentication or issue
+submission.
 
 For filesystem scenarios, tests must hash originals before and after import/edit/export. UI assertions
 alone cannot prove the non-destructive contract.
@@ -49,6 +66,7 @@ capture and inspect at least:
 - Select photo with filmstrip and shortcut hint;
 - Edit with inspector and original state;
 - command palette;
+- Feedback mode target highlight, composer, optional-context state, and browser-opened confirmation;
 - export configuration, progress, error, and completion;
 - a compact window size and reduced-motion mode.
 

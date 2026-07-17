@@ -125,6 +125,7 @@ export function LibraryGrid() {
       aria-label="Photo grid"
       aria-rowcount={rowCount}
       className="library-grid"
+      data-feedback="library.grid"
       ref={gridRef}
       role="grid"
     >
@@ -146,6 +147,7 @@ export function LibraryGrid() {
                 aria-label={`${photo.fileName}${photo.flag === 'pick' ? ', picked' : photo.flag === 'reject' ? ', rejected' : ''}`}
                 aria-selected={selected.has(photo.id)}
                 className="photo-tile"
+                data-feedback="library.photo"
                 data-flag={photo.flag}
                 data-selected={selected.has(photo.id)}
                 data-testid={`photo-${photo.id}`}

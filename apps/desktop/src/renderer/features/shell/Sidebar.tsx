@@ -29,7 +29,7 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className="sidebar" data-feedback="sidebar">
       <div className="sidebar-scroll">
         <div className="sidebar-section-heading">
           <span>Library</span>
@@ -41,6 +41,7 @@ export function Sidebar() {
               <button
                 className="sidebar-row"
                 data-active={catalog.filter === item.value}
+                data-feedback={`sidebar.filter.${item.value}`}
                 key={item.value}
                 onClick={() => setFilter(item.value)}
                 type="button"
@@ -75,6 +76,7 @@ export function Sidebar() {
         </div>
         <Button
           className="add-source"
+          data-feedback="sidebar.add-folder"
           icon={<Plus size={14} />}
           onClick={() => void scanFolder()}
           variant="ghost"

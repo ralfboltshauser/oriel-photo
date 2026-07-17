@@ -1,0 +1,37 @@
+name: Interface feedback
+description: Point to a part of Oriel and explain what should change.
+title: '[Interface feedback] '
+labels:
+  - feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make Oriel clearer. This form was prepared by Oriel's feedback mode. Review every field before submitting because this issue will be public.
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Feedback
+      description: What happened, and what did you expect instead?
+      placeholder: Describe one clear change or problem.
+    validations:
+      required: true
+  - type: textarea
+    id: target
+    attributes:
+      label: Interface target
+      description: Safe semantic context captured by Oriel. It never includes photo data, filenames, or local paths.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Technical context
+      description: Optional application and viewport details. Remove anything you do not want to publish.
+  - type: checkboxes
+    id: public-review
+    attributes:
+      label: Public review
+      options:
+        - label: I reviewed the fields above and understand that submitting creates a public GitHub issue.
+          required: true

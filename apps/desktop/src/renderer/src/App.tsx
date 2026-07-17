@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 
 import { CommandPalette } from '../features/commands/CommandPalette';
 import { ExportDialog } from '../features/export/ExportDialog';
+import { FeedbackOverlay } from '../features/feedback/FeedbackOverlay';
 import { ImportReviewDialog } from '../features/import/ImportReviewDialog';
 import { Onboarding } from '../features/onboarding/Onboarding';
 import { AppErrorBoundary } from '../features/recovery/AppErrorBoundary';
@@ -56,6 +57,7 @@ function AppContent() {
       <ImportReviewDialog />
       <CommandPalette />
       <ExportDialog />
+      <FeedbackOverlay />
       <Toaster
         closeButton
         duration={3800}

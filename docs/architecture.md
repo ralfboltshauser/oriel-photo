@@ -42,7 +42,9 @@ React renderer ───────── product UI and Canvas image recipes
 - canonicalizing approved source roots and serving only contained local images through
   `oriel-media:`;
 - collision-safe, temporary-then-rename export writes;
-- revealing files in the OS and gathering diagnostics.
+- revealing files in the OS and gathering diagnostics;
+- validating feedback drafts and opening only Oriel's exact GitHub new-issue endpoint in the system
+  browser.
 
 ### Preload owns
 
@@ -111,6 +113,31 @@ not a professional RAW/color engine.
 
 This prevents a canceled or failed write from masquerading as a complete JPEG. A future native image
 pipeline may move rendering out of the renderer without changing the product flow.
+
+### Interface feedback
+
+1. Feedback mode is ephemeral renderer state. Authored `data-feedback` identifiers mark stable,
+   semantic targets; pointer selection is intercepted so the target's product action does not run.
+2. The renderer snapshots only a sanitized target ID, selector, component trail, tag, role, and
+   on-screen bounds. It does not copy visible DOM text or attach a photo, screenshot, filename,
+   filesystem path, EXIF, or catalog content.
+3. The user reviews the target details and may exclude the safe diagnostic context: app version,
+   operating system, workspace, view, viewport, and target bounds.
+4. The renderer sends a structured `FeedbackIssueDraft` through the typed preload bridge. It cannot
+   supply an arbitrary destination URL.
+5. Shared domain code removes control characters, validates required fields and field limits, and
+   constructs a URL whose exact destination is
+   `https://github.com/ralfboltshauser/oriel-photo/issues/new`. The serialized URL is rejected above
+   7,500 characters.
+6. The main process validates the trusted IPC sender, constructs the URL again, and hands it to the
+   operating system browser. The URL is not logged, and no GitHub token or credential crosses the
+   bridge.
+7. GitHub displays a prefilled public issue form. The user's browser session determines authorship,
+   and the issue does not exist until the user submits it on GitHub.
+
+The exact endpoint and locally constructed query are the allowlist. Accepting renderer-provided URLs,
+automatically creating issues, or adding GitHub OAuth would be a different security and product
+boundary and must not be smuggled into this bridge.
 
 ## Catalog durability
 

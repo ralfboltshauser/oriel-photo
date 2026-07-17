@@ -15,7 +15,7 @@ export function StageRail() {
   const workspace = useCatalogStore((state) => state.catalog.workspace);
   const setWorkspace = useCatalogStore((state) => state.setWorkspace);
   return (
-    <nav aria-label="Workflow" className="stage-rail">
+    <nav aria-label="Workflow" className="stage-rail" data-feedback="workflow.rail">
       <div className="stage-rail-items">
         {stages.map((stage) => {
           const Icon = stage.icon;
@@ -25,6 +25,7 @@ export function StageRail() {
                 aria-current={workspace === stage.value ? 'page' : undefined}
                 className="stage-button"
                 data-active={workspace === stage.value}
+                data-feedback={`workflow.${stage.value}`}
                 label={stage.label}
                 onClick={() => setWorkspace(stage.value)}
               >

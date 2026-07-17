@@ -106,6 +106,7 @@ export function ExportDialog() {
         <Dialog.Content
           aria-describedby="export-description"
           className="dialog-content export-dialog"
+          data-feedback="export.dialog"
         >
           <div className="dialog-heading">
             <div className="dialog-icon">

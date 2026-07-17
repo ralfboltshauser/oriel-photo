@@ -2,6 +2,7 @@ import * as Slider from '@radix-ui/react-slider';
 import { useId, useState } from 'react';
 
 export interface SliderFieldProps {
+  feedbackId?: string;
   label: string;
   value: number;
   min: number;
@@ -14,6 +15,7 @@ export interface SliderFieldProps {
 }
 
 export function SliderField({
+  feedbackId,
   label,
   value,
   min,
@@ -39,7 +41,11 @@ export function SliderField({
   };
 
   return (
-    <div className="oriel-slider-field" data-testid={`slider-${label.toLowerCase()}`}>
+    <div
+      className="oriel-slider-field"
+      data-feedback={feedbackId}
+      data-testid={`slider-${label.toLowerCase()}`}
+    >
       <div className="oriel-slider-header">
         <label className="oriel-slider-label" htmlFor={id} onDoubleClick={onReset}>
           {label}

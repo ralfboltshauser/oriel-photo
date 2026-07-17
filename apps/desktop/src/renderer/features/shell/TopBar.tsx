@@ -13,7 +13,7 @@ export function TopBar() {
   const visible = filterPhotos(catalog.photos, catalog.filter, catalog.minimumRating);
 
   return (
-    <header className="topbar">
+    <header className="topbar" data-feedback="topbar">
       <div className="topbar-title">
         <strong>
           {catalog.workspace === 'select'
@@ -29,7 +29,7 @@ export function TopBar() {
         </span>
       </div>
 
-      <div className="topbar-center">
+      <div className="topbar-center" data-feedback="topbar.view-mode">
         {catalog.workspace !== 'deliver' ? (
           <SegmentedControl
             ariaLabel="View mode"
@@ -48,18 +48,32 @@ export function TopBar() {
           <span className="selection-count">{catalog.selectedPhotoIds.length} selected</span>
         ) : null}
         <Tooltip content="Hide panels · Tab">
-          <IconButton label="Hide panels" onClick={togglePanels}>
+          <IconButton
+            data-feedback="topbar.hide-panels"
+            label="Hide panels"
+            onClick={togglePanels}
+          >
             <PanelLeftClose size={15} />
           </IconButton>
         </Tooltip>
-        <button className="command-trigger" onClick={() => setCommandOpen(true)} type="button">
+        <button
+          className="command-trigger"
+          data-feedback="topbar.command-menu"
+          onClick={() => setCommandOpen(true)}
+          type="button"
+        >
           <Search size={13} />
           <span>Find anything</span>
           <kbd>
             <Command size={10} />K
           </kbd>
         </button>
-        <Button icon={<Send size={14} />} onClick={() => setExportOpen(true)} variant="primary">
+        <Button
+          data-feedback="topbar.export"
+          icon={<Send size={14} />}
+          onClick={() => setExportOpen(true)}
+          variant="primary"
+        >
           Export
         </Button>
       </div>

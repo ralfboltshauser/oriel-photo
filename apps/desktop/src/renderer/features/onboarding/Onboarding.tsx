@@ -24,13 +24,17 @@ export function Onboarding() {
   };
 
   return (
-    <main className="onboarding-shell">
+    <main className="onboarding-shell" data-feedback="onboarding">
       <div aria-hidden="true" className="onboarding-atmosphere">
         <img alt="" src={photo10} />
         <img alt="" src={photo15} />
         <img alt="" src={photo29} />
       </div>
-      <section aria-labelledby="onboarding-title" className="onboarding-card">
+      <section
+        aria-labelledby="onboarding-title"
+        className="onboarding-card"
+        data-feedback="onboarding.card"
+      >
         <div className="onboarding-brand">
           <BrandMark size={32} />
           <span>Oriel</span>
@@ -70,6 +74,7 @@ export function Onboarding() {
             <div className="onboarding-actions">
               <Button
                 data-testid="try-sample"
+                data-feedback="onboarding.try-sample"
                 icon={<Image size={15} />}
                 onClick={() => setStep('ready')}
                 variant="primary"
@@ -78,6 +83,7 @@ export function Onboarding() {
               </Button>
               <Button
                 disabled={choosingFolder}
+                data-feedback="onboarding.open-folder"
                 icon={<FolderOpen size={15} />}
                 onClick={() => void chooseFolder()}
               >
@@ -134,7 +140,12 @@ export function Onboarding() {
               </div>
             </div>
             <div className="onboarding-actions single">
-              <Button data-testid="open-sample" onClick={startDemo} variant="primary">
+              <Button
+                data-feedback="onboarding.open-sample"
+                data-testid="open-sample"
+                onClick={startDemo}
+                variant="primary"
+              >
                 Open Alpine weekend <ArrowRight size={15} />
               </Button>
             </div>

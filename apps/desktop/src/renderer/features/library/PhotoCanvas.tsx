@@ -70,7 +70,12 @@ export function PhotoCanvas({
   }, [adjustments, image, original, size]);
 
   return (
-    <div className="photo-canvas-host" data-original={original} ref={hostRef}>
+    <div
+      className="photo-canvas-host"
+      data-feedback="photo.preview"
+      data-original={original}
+      ref={hostRef}
+    >
       <canvas
         aria-label={original ? `Original ${fileName}` : `Edited ${fileName}`}
         ref={canvasRef}

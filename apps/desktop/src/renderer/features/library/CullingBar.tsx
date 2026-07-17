@@ -11,10 +11,11 @@ export function CullingBar() {
   if (!selected) return null;
 
   return (
-    <div className="culling-bar">
+    <div className="culling-bar" data-feedback="select.culling-bar">
       <div className="culling-actions">
         <Button
           data-active={selected.flag === 'pick'}
+          data-feedback="select.pick"
           icon={<Check size={14} />}
           onClick={() => flagSelected('pick')}
           variant="ghost"
@@ -23,6 +24,7 @@ export function CullingBar() {
         </Button>
         <Button
           data-active={selected.flag === 'reject'}
+          data-feedback="select.reject"
           icon={<X size={14} />}
           onClick={() => flagSelected('reject')}
           variant="ghost"
@@ -30,6 +32,7 @@ export function CullingBar() {
           <Kbd>X</Kbd> Reject
         </Button>
         <Button
+          data-feedback="select.unflag"
           icon={<RotateCcw size={13} />}
           onClick={() => flagSelected('unflagged')}
           variant="ghost"
@@ -37,7 +40,7 @@ export function CullingBar() {
           <Kbd>U</Kbd>
         </Button>
       </div>
-      <div aria-label="Rating" className="rating-control">
+      <div aria-label="Rating" className="rating-control" data-feedback="select.rating">
         {[1, 2, 3, 4, 5].map((rating) => (
           <button
             aria-label={`${rating} stars`}

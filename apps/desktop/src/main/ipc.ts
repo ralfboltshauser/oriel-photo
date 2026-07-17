@@ -3,12 +3,14 @@ import { randomUUID } from 'node:crypto';
 import { access, constants, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { basename, extname, join } from 'node:path';
 
-import type {
-  CatalogDocument,
-  ExportDestination,
-  ExportRequest,
-  ExportResult,
-  ImportScanResult,
+import {
+  createFeedbackIssueUrl,
+  type CatalogDocument,
+  type ExportDestination,
+  type ExportRequest,
+  type ExportResult,
+  type FeedbackIssueDraft,
+  type ImportScanResult,
 } from '@oriel/domain';
 import log from 'electron-log/main';
 
@@ -147,6 +149,19 @@ export function registerIpc(catalogStore: CatalogStore): void {
     assertTrustedSender(event);
     shell.showItemInFolder(path);
   });
+
+  ipcMain.handle(
+    'oriel:feedback:open-issue',
+    async (event, draft: FeedbackIssueDraft): Promise<void> => {
+      assertTrustedSender(event);
+      const url = createFeedbackIssueUrl(draft);
+      if (process.env.ORIEL_E2E_USER_DATA && process.env.ORIEL_E2E_FEEDBACK_CAPTURE_PATH) {
+        await writeFile(process.env.ORIEL_E2E_FEEDBACK_CAPTURE_PATH, url, 'utf8');
+        return;
+      }
+      await shell.openExternal(url);
+    },
+  );
 
   ipcMain.handle('oriel:diagnostics:get', (event): Record<string, string> => {
     assertTrustedSender(event);

@@ -59,6 +59,7 @@ test('@electron production bundle uses the preload boundary and restores its cat
       'getDiagnostics',
       'importFolder',
       'loadCatalog',
+      'openFeedbackIssue',
       'platform',
       'registerCloseHandler',
       'saveCatalog',
@@ -148,5 +149,56 @@ test('@electron imports and exports through real main-process file boundaries', 
       rm(userDataPath, { force: true, recursive: true }),
       rm(exportPath, { force: true, recursive: true }),
     ]);
+  }
+});
+
+test('@electron opens only a privacy-safe Oriel GitHub issue draft', async () => {
+  const userDataPath = await mkdtemp(join(tmpdir(), 'oriel-feedback-e2e-'));
+  const capturePath = join(userDataPath, 'feedback-url.txt');
+  let application: ElectronApplication | undefined;
+
+  try {
+    application = await launchOriel(userDataPath, {
+      ORIEL_E2E_FEEDBACK_CAPTURE_PATH: capturePath,
+    });
+    const page = await application.firstWindow();
+    await page.getByTestId('try-sample').click();
+    await page.getByTestId('open-sample').click();
+
+    await page.keyboard.press('Control+Shift+f');
+    await page.getByRole('button', { name: 'Export', exact: true }).click();
+    await expect(page.getByRole('dialog', { name: 'Feedback on Export' })).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'Export photographs' })).toHaveCount(0);
+    await page
+      .getByLabel('What should change?')
+      .fill('Make the export destination clearer before opening this dialog.');
+    await page.getByRole('button', { name: 'Review on GitHub' }).click();
+
+    await expect
+      .poll(async () => {
+        try {
+          return await readFile(capturePath, 'utf8');
+        } catch {
+          return '';
+        }
+      })
+      .not.toBe('');
+
+    const issueUrl = new URL(await readFile(capturePath, 'utf8'));
+    expect(`${issueUrl.origin}${issueUrl.pathname}`).toBe(
+      'https://github.com/ralfboltshauser/oriel-photo/issues/new',
+    );
+    expect(issueUrl.searchParams.get('template')).toBe('interface-feedback.yml');
+    expect(issueUrl.searchParams.get('feedback')).toBe(
+      'Make the export destination clearer before opening this dialog.',
+    );
+    expect(issueUrl.searchParams.get('target')).toContain('topbar.export');
+    expect(issueUrl.searchParams.get('context')).toContain('Workspace: library');
+    expect(decodeURIComponent(issueUrl.toString())).not.toMatch(/ORL_|\/home\/|\.jpg/i);
+    await expect(page.getByRole('heading', { name: 'GitHub draft opened' })).toBeVisible();
+    await expect(page.getByText(/No issue exists until/)).toBeVisible();
+  } finally {
+    if (application) await application.close();
+    await rm(userDataPath, { force: true, recursive: true });
   }
 });

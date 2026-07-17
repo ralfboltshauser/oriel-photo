@@ -17,6 +17,7 @@ export function ImportReviewDialog() {
           <Dialog.Content
             aria-describedby="import-description"
             className="dialog-content import-dialog"
+            data-feedback="import.dialog"
           >
             <div className="dialog-heading">
               <div className="dialog-icon">
