@@ -1,0 +1,563 @@
+.dialog-overlay,
+.command-overlay {
+  background: rgba(4, 5, 5, 0.7);
+  inset: 0;
+  position: fixed;
+  z-index: 100;
+}
+
+.dialog-overlay {
+  animation: dialog-overlay-in 180ms ease-out;
+  backdrop-filter: blur(3px);
+}
+
+@keyframes dialog-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dialog-content {
+  background: #171a18;
+  border: 1px solid #343a35;
+  border-radius: var(--oriel-radius-dialog);
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.62),
+    0 1px 0 rgba(255, 255, 255, 0.035) inset;
+  left: 50%;
+  max-height: calc(100vh - 64px);
+  outline: none;
+  overflow: auto;
+  padding: 18px;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  width: 480px;
+  z-index: 101;
+}
+
+.dialog-content[data-state='open'] {
+  animation: dialog-content-in 210ms var(--oriel-ease-out);
+}
+
+@keyframes dialog-content-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -49%) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.dialog-heading {
+  align-items: start;
+  display: grid;
+  gap: 11px;
+  grid-template-columns: 36px minmax(0, 1fr) 28px;
+}
+
+.dialog-icon {
+  align-items: center;
+  background: var(--oriel-coral-soft);
+  border-radius: 8px;
+  color: var(--oriel-coral);
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+}
+
+.dialog-heading > div:nth-child(2) {
+  display: grid;
+  gap: 4px;
+}
+.dialog-heading h2 {
+  font-size: 13px;
+  font-weight: 610;
+  margin: 1px 0 0;
+}
+.dialog-heading p {
+  color: var(--oriel-text-muted);
+  font-size: 9px;
+  line-height: 1.4;
+  margin: 0;
+}
+.dialog-close {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  color: var(--oriel-text-muted);
+  display: flex;
+  height: 28px;
+  justify-content: center;
+  padding: 0;
+  width: 28px;
+}
+.dialog-close:focus-visible {
+  box-shadow: 0 0 0 2px var(--oriel-focus);
+}
+
+.dialog-actions {
+  align-items: center;
+  display: flex;
+  gap: 7px;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.import-summary {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 19px;
+}
+
+.import-stat {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--oriel-divider-soft);
+  border-radius: 8px;
+  display: grid;
+  gap: 7px;
+  grid-template-columns: 20px auto 1fr;
+  min-height: 52px;
+  padding: 0 11px;
+}
+
+.import-stat.ready svg {
+  color: var(--oriel-success);
+}
+.import-stat.skipped svg {
+  color: var(--oriel-warning);
+}
+.import-stat strong {
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 15px;
+  font-weight: 500;
+}
+.import-stat span {
+  color: var(--oriel-text-muted);
+  font-size: 9px;
+}
+
+.import-warnings {
+  border: 1px solid rgba(232, 180, 98, 0.16);
+  border-radius: 7px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.import-warnings summary {
+  align-items: center;
+  color: var(--oriel-warning);
+  display: flex;
+  font-size: 9px;
+  gap: 7px;
+  list-style: none;
+  padding: 9px 10px;
+}
+.import-warnings summary::-webkit-details-marker {
+  display: none;
+}
+.import-warnings > div {
+  border-top: 1px solid rgba(232, 180, 98, 0.12);
+  max-height: 100px;
+  overflow: auto;
+  padding: 5px 10px;
+}
+.import-warnings p {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+.import-warnings p span {
+  font-size: 9px;
+}
+.import-warnings p small {
+  color: var(--oriel-text-muted);
+  font-size: 8px;
+}
+
+.safety-callout,
+.export-trust {
+  align-items: center;
+  background: rgba(232, 180, 98, 0.055);
+  border: 1px solid rgba(232, 180, 98, 0.14);
+  border-radius: 7px;
+  display: grid;
+  gap: 9px;
+  grid-template-columns: 20px 1fr;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.safety-callout svg {
+  color: var(--oriel-warning);
+}
+.safety-callout > div {
+  display: grid;
+  gap: 2px;
+}
+.safety-callout strong {
+  font-size: 9px;
+  font-weight: 580;
+}
+.safety-callout span {
+  color: var(--oriel-text-muted);
+  font-size: 8px;
+}
+
+.command-overlay {
+  background: rgba(4, 5, 5, 0.5);
+}
+
+.command-dialog {
+  left: 50%;
+  outline: none;
+  position: fixed;
+  top: 22%;
+  transform: translateX(-50%);
+  width: 540px;
+  z-index: 102;
+}
+
+.command-dialog [cmdk-root] {
+  background: #1a1e1b;
+  border: 1px solid #3a403b;
+  border-radius: 11px;
+  box-shadow:
+    0 28px 100px rgba(0, 0, 0, 0.65),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  overflow: hidden;
+}
+
+.command-input-wrap {
+  align-items: center;
+  border-bottom: 1px solid var(--oriel-divider);
+  color: var(--oriel-text-muted);
+  display: flex;
+  gap: 10px;
+  height: 52px;
+  padding: 0 15px;
+}
+
+.command-input-wrap input {
+  background: transparent;
+  border: 0;
+  color: var(--oriel-text);
+  flex: 1;
+  font-size: 13px;
+  height: 100%;
+  outline: none;
+}
+
+.command-input-wrap input::placeholder {
+  color: var(--oriel-text-muted);
+}
+.command-dialog [cmdk-list] {
+  max-height: 310px;
+  overflow: auto;
+  padding: 7px;
+}
+.command-dialog [cmdk-group-heading] {
+  color: var(--oriel-text-muted);
+  font-size: 8px;
+  font-weight: 620;
+  letter-spacing: 0.09em;
+  padding: 7px 8px 5px;
+  text-transform: uppercase;
+}
+.command-dialog [cmdk-item] {
+  align-items: center;
+  border-radius: 6px;
+  color: var(--oriel-text-secondary);
+  display: grid;
+  font-size: 11px;
+  gap: 9px;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  height: 36px;
+  padding: 0 8px;
+}
+.command-dialog [cmdk-item][data-selected='true'] {
+  background: var(--oriel-surface-hover);
+  color: var(--oriel-text);
+}
+.command-item-icon {
+  align-items: center;
+  color: var(--oriel-text-muted);
+  display: flex;
+  justify-content: center;
+}
+.command-dialog [cmdk-item][data-selected='true'] .command-item-icon {
+  color: var(--oriel-coral);
+}
+.command-dialog [cmdk-item] kbd,
+.command-dialog footer kbd {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 4px;
+  color: var(--oriel-text-secondary);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 8px;
+  padding: 3px 5px;
+}
+.command-dialog [cmdk-empty] {
+  color: var(--oriel-text-muted);
+  font-size: 10px;
+  padding: 32px;
+  text-align: center;
+}
+.command-dialog footer {
+  align-items: center;
+  border-top: 1px solid var(--oriel-divider);
+  color: var(--oriel-text-muted);
+  display: flex;
+  font-size: 8px;
+  gap: 12px;
+  height: 34px;
+  justify-content: flex-end;
+  padding: 0 10px;
+}
+.command-dialog footer span {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+}
+
+.export-config {
+  display: grid;
+  gap: 9px;
+  margin-top: 19px;
+}
+.export-label {
+  color: var(--oriel-text-muted);
+  font-size: 8px;
+  font-weight: 620;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+.export-config > .oriel-segmented {
+  align-self: start;
+}
+
+.recipe-options {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: 1fr 1fr;
+}
+.recipe-options button {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--oriel-divider-soft);
+  border-radius: 7px;
+  color: var(--oriel-text-muted);
+  display: grid;
+  gap: 9px;
+  grid-template-columns: 20px 1fr 10px;
+  min-height: 54px;
+  outline: none;
+  padding: 8px 10px;
+  text-align: left;
+}
+.recipe-options button[data-active='true'] {
+  background: var(--oriel-coral-soft);
+  border-color: rgba(255, 112, 97, 0.35);
+  color: var(--oriel-coral);
+}
+.recipe-options button:focus-visible {
+  box-shadow: 0 0 0 2px var(--oriel-focus);
+}
+.recipe-options button span {
+  display: grid;
+  gap: 2px;
+}
+.recipe-options button strong {
+  color: var(--oriel-text);
+  font-size: 9px;
+  font-weight: 570;
+}
+.recipe-options button small {
+  color: var(--oriel-text-secondary);
+  font-size: 8px;
+}
+.recipe-options button[data-active='true'] small {
+  color: var(--oriel-text-secondary);
+}
+.recipe-options button i {
+  border: 1px solid var(--oriel-divider);
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+}
+.recipe-options button[data-active='true'] i {
+  background: var(--oriel-coral);
+  border: 3px solid #512922;
+}
+
+.destination-picker {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--oriel-divider-soft);
+  border-radius: 7px;
+  color: var(--oriel-text-muted);
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 19px minmax(0, 1fr) auto;
+  height: 38px;
+  outline: none;
+  padding: 0 10px;
+  text-align: left;
+}
+.destination-picker span {
+  color: var(--oriel-text-secondary);
+  font-size: 9px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.destination-picker small {
+  color: var(--oriel-coral);
+  font-size: 8px;
+}
+.destination-picker:focus-visible {
+  box-shadow: 0 0 0 2px var(--oriel-focus);
+}
+
+.export-trust {
+  background: rgba(112, 211, 154, 0.045);
+  border-color: rgba(112, 211, 154, 0.12);
+  margin-top: 3px;
+}
+.export-trust svg {
+  color: var(--oriel-success);
+}
+.export-trust span {
+  display: grid;
+  font-size: 9px;
+  gap: 2px;
+}
+.export-trust small {
+  color: var(--oriel-text-secondary);
+  font-size: 8px;
+}
+.export-error {
+  color: var(--oriel-danger);
+  font-size: 9px;
+  margin: 0;
+}
+
+.export-progress,
+.export-complete {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  justify-content: center;
+  padding: 24px 18px 4px;
+  text-align: center;
+}
+.progress-orb,
+.complete-mark {
+  align-items: center;
+  background: var(--oriel-coral-soft);
+  border-radius: 50%;
+  color: var(--oriel-coral);
+  display: flex;
+  height: 52px;
+  justify-content: center;
+  margin-bottom: 15px;
+  width: 52px;
+}
+.progress-orb svg {
+  animation: oriel-spin 650ms linear infinite;
+}
+.export-progress strong,
+.export-complete > strong {
+  font-size: 13px;
+  font-weight: 580;
+}
+.export-progress > span,
+.export-complete > span {
+  color: var(--oriel-text-muted);
+  font-size: 9px;
+  margin-top: 5px;
+}
+.progress-track {
+  background: #303530;
+  border-radius: 99px;
+  height: 3px;
+  margin: 21px 0 13px;
+  overflow: hidden;
+  width: 260px;
+}
+.progress-track i {
+  background: var(--oriel-coral);
+  display: block;
+  height: 100%;
+  transform-origin: left;
+  transition: transform 220ms var(--oriel-ease-out);
+  width: 100%;
+}
+.complete-mark {
+  background: rgba(112, 211, 154, 0.1);
+  color: var(--oriel-success);
+}
+.complete-summary {
+  border: 1px solid var(--oriel-divider-soft);
+  border-radius: 7px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 20px;
+  padding: 11px 13px;
+  text-align: left;
+  width: 100%;
+}
+.complete-summary span {
+  color: var(--oriel-text-muted);
+  font-size: 8px;
+}
+.complete-summary strong {
+  font-size: 8px;
+  font-weight: 550;
+  text-align: right;
+}
+.export-complete .dialog-actions {
+  align-self: stretch;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dialog-close:hover {
+    background: var(--oriel-surface-hover);
+    color: var(--oriel-text);
+  }
+  .recipe-options button:hover:not([data-active='true']),
+  .destination-picker:hover {
+    border-color: var(--oriel-divider);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog-overlay,
+  .dialog-content[data-state='open'] {
+    animation: none;
+  }
+
+  .progress-orb svg {
+    animation: none;
+  }
+
+  .progress-track i {
+    transition-duration: 0ms;
+  }
+}

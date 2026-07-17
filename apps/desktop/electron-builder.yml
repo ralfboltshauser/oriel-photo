@@ -1,0 +1,39 @@
+appId: org.oriel.photo
+productName: Oriel
+copyright: Copyright © 2026 Oriel contributors
+executableName: oriel
+asar: true
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/**/*
+  - package.json
+extraMetadata:
+  main: out/main/index.js
+linux:
+  category: Graphics
+  icon: build/icon.png
+  maintainer: Oriel contributors <ralfboltshauser@users.noreply.github.com>
+  synopsis: A fast, local-first photo workspace
+  syncDesktopName: true
+  target:
+    - AppImage
+    - deb
+  artifactName: Oriel-${version}-${arch}.${ext}
+mac:
+  category: public.app-category.photography
+  icon: build/icon.png
+  target:
+    - dmg
+    - zip
+  artifactName: Oriel-${version}-${arch}.${ext}
+win:
+  icon: build/icon.png
+  target:
+    - nsis
+  artifactName: Oriel-Setup-${version}-${arch}.${ext}
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+publish: null

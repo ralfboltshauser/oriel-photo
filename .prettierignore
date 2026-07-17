@@ -1,0 +1,10 @@
+node_modules
+**/.astro
+dist
+out
+.vite
+coverage
+test-results
+playwright-report
+pnpm-lock.yaml
+*.svg

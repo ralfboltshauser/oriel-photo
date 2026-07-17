@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node", "vite/client", "vitest/globals"]
+  },
+  "include": [
+    "src",
+    "tests",
+    "electron.vite.config.ts",
+    "playwright.config.ts",
+    "vite.renderer.config.ts",
+    "vitest.config.ts"
+  ]
+}
