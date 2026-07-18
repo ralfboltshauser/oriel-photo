@@ -1,347 +1,180 @@
 ---
-import photo11 from '@oriel/fixtures/assets/photo-11.jpg';
-import photo12 from '@oriel/fixtures/assets/photo-12.jpg';
-import photo13 from '@oriel/fixtures/assets/photo-13.jpg';
-import photo15 from '@oriel/fixtures/assets/photo-15.jpg';
-import photo16 from '@oriel/fixtures/assets/photo-16.jpg';
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 
-const filmstrip = [photo12, photo13, photo15, photo16];
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  loading?: 'eager' | 'lazy';
+  priority?: boolean;
+  class?: string;
+  label?: string;
+}
+
+const {
+  image,
+  alt,
+  loading = 'lazy',
+  priority = false,
+  class: className,
+  label = 'Oriel workspace',
+} = Astro.props;
+
+const effectiveLoading = priority ? 'eager' : loading;
 ---
 
-<div
-  class="product-frame"
-  aria-label="Preview of the Oriel photo selection workspace"
-  role="img"
->
-  <div class="window-bar" aria-hidden="true">
-    <span class="window-dot"></span>
-    <span class="window-dot"></span>
-    <span class="window-dot"></span>
-    <span class="window-title">Alpine weekend</span>
-    <span class="saved">Saved</span>
+<figure class:list={['product-frame', className]} data-product-frame>
+  <div class="frame-atmosphere" aria-hidden="true"></div>
+  <div class="frame-shell">
+    <div class="frame-chrome" aria-hidden="true">
+      <span class="frame-mark"><i></i></span>
+      <span class="frame-label">{label}</span>
+      <span class="frame-rule"></span>
+      <span class="frame-state"><i></i> Actual product</span>
+    </div>
+    <div class="frame-viewport">
+      <Image
+        src={image}
+        {alt}
+        loading={effectiveLoading}
+        fetchpriority={priority ? 'high' : undefined}
+        decoding="async"
+        widths={[640, 960, 1440]}
+        sizes="(min-width: 1100px) 58vw, (min-width: 720px) 92vw, 100vw"
+        format="webp"
+        quality={92}
+      />
+      <span class="frame-glint" aria-hidden="true"></span>
+    </div>
   </div>
-  <div class="app-body" aria-hidden="true">
-    <aside class="stage-rail">
-      <span class="mini-mark"></span>
-      <span class="stage">L</span>
-      <span class="stage active">S</span>
-      <span class="stage">E</span>
-      <span class="stage">D</span>
-    </aside>
-    <aside class="collection-panel">
-      <span class="eyebrow">SELECT</span>
-      <strong>All photographs</strong>
-      <span class="collection-row selected"><span>All</span><b>12</b></span>
-      <span class="collection-row"><span>Picks</span><b>2</b></span>
-      <span class="collection-row"><span>Unflagged</span><b>9</b></span>
-      <span class="collection-row"><span>Rejected</span><b>1</b></span>
-      <span class="panel-rule"></span>
-      <span class="eyebrow">SOURCE</span>
-      <span class="source"><i></i>Alpine weekend</span>
-    </aside>
-    <section class="photo-area">
-      <div class="photo-meta"><span>ORL_1051.jpg</span><span>Fujifilm X-T5 · 23mm</span></div>
-      <img src={photo11.src} alt="" loading="eager" />
-      <div class="flag">PICK</div>
-      <div class="filmstrip">
-        {
-          filmstrip.map((photo, index) => (
-            <span class:list={['filmstrip-item', { current: index === 0 }]}>
-              <img src={photo.src} alt="" loading="eager" />
-            </span>
-          ))
-        }
-      </div>
-    </section>
-    <aside class="quick-panel">
-      <span class="eyebrow">QUICK CULL</span>
-      <strong>Keep the best frame.</strong>
-      <span class="panel-copy">Flag, rate, and move on without leaving the keyboard.</span>
-      <span class="shortcut-row"><span>Pick</span><kbd>P</kbd></span>
-      <span class="shortcut-row"><span>Reject</span><kbd>X</kbd></span>
-      <span class="shortcut-row"><span>Clear</span><kbd>U</kbd></span>
-      <span class="panel-rule"></span>
-      <span class="eyebrow">RATING</span>
-      <span class="stars">★★★★★</span>
-    </aside>
-  </div>
-</div>
+</figure>
 
 <style>
   .product-frame {
-    background: #0b0d0c;
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 14px;
-    box-shadow:
-      0 52px 120px rgba(0, 0, 0, 0.55),
-      0 1px 0 rgba(255, 255, 255, 0.08) inset;
-    color: var(--oriel-text);
-    min-width: 820px;
-    overflow: hidden;
-    transform: perspective(1300px) rotateX(1.5deg) rotateY(-2deg);
-    transform-origin: center bottom;
-  }
-
-  .window-bar {
-    align-items: center;
-    border-bottom: 1px solid #282c29;
-    display: flex;
-    gap: 6px;
-    height: 37px;
-    padding: 0 12px;
-  }
-
-  .window-dot {
-    background: #3a3e3a;
-    border-radius: 50%;
-    height: 7px;
-    width: 7px;
-  }
-
-  .window-title {
-    color: #a8aea8;
-    font-size: 8px;
-    margin-left: auto;
-  }
-
-  .saved {
-    color: #70d39a;
-    font-size: 7px;
-    margin-left: auto;
-  }
-
-  .app-body {
-    display: grid;
-    grid-template-columns: 42px 154px minmax(430px, 1fr) 154px;
-    height: 500px;
-  }
-
-  .stage-rail {
-    align-items: center;
-    border-right: 1px solid #282c29;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    padding-top: 10px;
-  }
-
-  .mini-mark {
-    border: 1px solid #f2f1ec;
-    border-radius: 4px;
-    height: 19px;
-    margin-bottom: 10px;
-    position: relative;
-    width: 19px;
-  }
-
-  .mini-mark::after {
-    border-bottom: 1px solid #ff7061;
-    border-right: 1px solid #ff7061;
-    content: '';
-    inset: 5px -3px -3px 5px;
-    position: absolute;
-  }
-
-  .stage {
-    align-items: center;
-    border-radius: 5px;
-    color: #8b928c;
-    display: flex;
-    font-size: 8px;
-    height: 28px;
-    justify-content: center;
-    width: 28px;
-  }
-
-  .stage.active {
-    background: #242925;
-    color: #f2f1ec;
-    box-shadow: 2px 0 0 #ff7061 inset;
-  }
-
-  .collection-panel,
-  .quick-panel {
-    background: #111412;
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-    padding: 22px 13px;
-  }
-
-  .collection-panel {
-    border-right: 1px solid #282c29;
-  }
-
-  .quick-panel {
-    border-left: 1px solid #282c29;
-  }
-
-  .eyebrow {
-    color: #8b928c;
-    font-size: 7px;
-    font-weight: 650;
-    letter-spacing: 0.11em;
-  }
-
-  strong {
-    font-size: 9px;
-    font-weight: 590;
-  }
-
-  .collection-row,
-  .shortcut-row {
-    align-items: center;
-    border-radius: 4px;
-    color: #a8aea8;
-    display: flex;
-    font-size: 8px;
-    justify-content: space-between;
-    min-height: 24px;
-    padding: 0 7px;
-  }
-
-  .collection-row.selected {
-    background: #202420;
-    color: #f2f1ec;
-  }
-
-  .collection-row b {
-    color: #8b928c;
-    font-size: 7px;
-    font-weight: 500;
-  }
-
-  .panel-rule {
-    background: #282c29;
-    height: 1px;
-    margin: 6px 0;
-  }
-
-  .source {
-    align-items: center;
-    color: #a8aea8;
-    display: flex;
-    font-size: 8px;
-    gap: 6px;
-  }
-
-  .source i {
-    background: #70d39a;
-    border-radius: 50%;
-    height: 5px;
-    width: 5px;
-  }
-
-  .photo-area {
-    align-items: center;
-    background: #0e100f;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    padding: 34px 28px 82px;
-    position: relative;
-  }
-
-  .photo-area > img {
-    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
-    display: block;
-    height: 100%;
+    --frame-radius: clamp(0.75rem, 1.2vw, 1.1rem);
+    container-type: inline-size;
+    isolation: isolate;
+    margin: 0;
     max-width: 100%;
-    object-fit: cover;
-  }
-
-  .photo-meta {
-    color: #a8aea8;
-    display: flex;
-    font-size: 7px;
-    justify-content: space-between;
-    left: 28px;
-    position: absolute;
-    right: 28px;
-    top: 15px;
-  }
-
-  .flag {
-    background: #ff7061;
-    border-radius: 3px;
-    bottom: 91px;
-    color: #21110f;
-    font-size: 7px;
-    font-weight: 700;
-    left: 38px;
-    padding: 4px 6px;
-    position: absolute;
-  }
-
-  .filmstrip {
-    align-items: center;
-    background: #111412;
-    border-top: 1px solid #282c29;
-    bottom: 0;
-    display: flex;
-    gap: 6px;
-    height: 72px;
-    left: 0;
-    padding: 8px 10px;
-    position: absolute;
-    right: 0;
-  }
-
-  .filmstrip-item {
-    background: #242925;
-    border: 2px solid transparent;
-    border-radius: 3px;
-    height: 52px;
-    overflow: hidden;
-    width: 73px;
-  }
-
-  .filmstrip-item.current {
-    border-color: #ff7061;
-  }
-
-  .filmstrip-item img {
-    height: 100%;
-    object-fit: cover;
+    position: relative;
     width: 100%;
   }
 
-  .panel-copy {
-    color: #8b928c;
-    font-size: 8px;
-    line-height: 1.5;
+  .frame-atmosphere {
+    background:
+      radial-gradient(circle at 76% 18%, rgb(255 112 97 / 22%), transparent 36%),
+      radial-gradient(circle at 20% 80%, rgb(112 211 154 / 10%), transparent 34%);
+    filter: blur(42px);
+    inset: 8% 4% -8%;
+    opacity: 0.82;
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
   }
 
-  kbd {
+  .frame-shell {
+    background: #0b0d0c;
+    border: 1px solid rgb(255 255 255 / 14%);
+    border-radius: var(--frame-radius);
+    box-shadow:
+      0 3.5rem 8rem rgb(0 0 0 / 46%),
+      0 1rem 2.5rem rgb(0 0 0 / 34%),
+      0 1px 0 rgb(255 255 255 / 9%) inset;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .frame-chrome {
     align-items: center;
-    background: #242925;
-    border: 1px solid #343934;
-    border-radius: 3px;
+    background: linear-gradient(180deg, #171a18, #111412);
+    border-bottom: 1px solid rgb(255 255 255 / 8%);
+    color: #a8aea8;
+    display: flex;
+    font-size: clamp(0.5rem, 1.25cqi, 0.66rem);
+    gap: 0.55rem;
+    height: clamp(2rem, 5cqi, 2.65rem);
+    letter-spacing: -0.01em;
+    padding: 0 clamp(0.7rem, 2cqi, 1rem);
+  }
+
+  .frame-mark {
+    border: 1px solid rgb(242 241 236 / 78%);
+    border-radius: 0.24rem;
+    height: 0.8rem;
+    position: relative;
+    width: 0.8rem;
+  }
+
+  .frame-mark i {
+    border-bottom: 1px solid #ff7061;
+    border-right: 1px solid #ff7061;
+    inset: 0.2rem -0.15rem -0.15rem 0.2rem;
+    position: absolute;
+  }
+
+  .frame-label {
     color: #f2f1ec;
+    font-weight: 560;
+  }
+
+  .frame-rule {
+    background: rgb(255 255 255 / 9%);
+    height: 1px;
+    margin-left: 0.2rem;
+    width: 1.3rem;
+  }
+
+  .frame-state {
+    align-items: center;
+    color: #838b84;
     display: inline-flex;
-    font-family: 'Geist Mono Variable', monospace;
-    font-size: 7px;
-    height: 17px;
-    justify-content: center;
-    min-width: 17px;
+    gap: 0.35rem;
+    margin-left: auto;
   }
 
-  .stars {
-    color: #e8b462;
-    font-size: 10px;
-    letter-spacing: 2px;
+  .frame-state i {
+    background: #70d39a;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0.2rem rgb(112 211 154 / 8%);
+    height: 0.3rem;
+    width: 0.3rem;
   }
 
-  @media (max-width: 900px) {
-    .product-frame {
-      min-width: 760px;
-      transform: perspective(1300px) rotateX(1.5deg) rotateY(-1deg);
+  .frame-viewport {
+    background: #0e100f;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .frame-viewport :global(img) {
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+
+  .frame-glint {
+    background: linear-gradient(116deg, rgb(255 255 255 / 5%), transparent 16% 78%);
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  @media (max-width: 40rem) {
+    .frame-shell {
+      box-shadow:
+        0 1.75rem 4rem rgb(0 0 0 / 42%),
+        0 1px 0 rgb(255 255 255 / 8%) inset;
+    }
+
+    .frame-rule {
+      display: none;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .product-frame {
-      transform: none;
+    .product-frame,
+    .frame-shell {
+      transform: none !important;
     }
   }
 </style>

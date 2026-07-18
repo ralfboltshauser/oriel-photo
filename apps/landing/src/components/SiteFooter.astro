@@ -1,0 +1,133 @@
+---
+import BrandMark from './BrandMark.astro';
+
+const repositoryUrl = 'https://github.com/ralfboltshauser/oriel-photo';
+---
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <a class="footer-brand" href="#top" aria-label="Oriel home">
+      <BrandMark size={28} /><span>Oriel</span>
+    </a>
+    <p>From card to final. Fully yours.</p>
+    <nav aria-label="Footer navigation">
+      <a href={`${repositoryUrl}/blob/main/README.md`} target="_blank" rel="noreferrer"
+        >Readme</a
+      >
+      <a href={`${repositoryUrl}/issues`} target="_blank" rel="noreferrer">Issues</a>
+      <a
+        href={`${repositoryUrl}/blob/main/docs/fixture-credits.md`}
+        target="_blank"
+        rel="noreferrer">Photography credits</a
+      >
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p>AGPL-3.0-or-later · Oriel is a working name and has not received trademark clearance.</p>
+    <p>
+      Adobe, Lightroom, and Photoshop are either registered trademarks or trademarks of Adobe in
+      the United States and/or other countries. Oriel is independent and is not authorized,
+      endorsed, or sponsored by Adobe.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin: 0 auto;
+    max-width: 1320px;
+    padding: 0 24px 45px;
+  }
+
+  .footer-top {
+    align-items: center;
+    border-bottom: 1px solid var(--oriel-divider-soft);
+    border-top: 1px solid var(--oriel-divider-soft);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-height: 86px;
+  }
+
+  .footer-brand {
+    align-items: center;
+    display: inline-flex;
+    font-size: 13px;
+    font-weight: 620;
+    gap: 8px;
+    justify-self: start;
+  }
+
+  .footer-top > p {
+    color: var(--oriel-text-secondary);
+    font-size: 10px;
+    margin: 0;
+    text-align: center;
+  }
+
+  .footer-top nav {
+    display: flex;
+    gap: 18px;
+    justify-self: end;
+  }
+
+  .footer-top nav a {
+    color: var(--oriel-text-muted);
+    font-size: 9px;
+    transition: color 140ms ease;
+  }
+
+  .footer-bottom {
+    display: grid;
+    gap: 60px;
+    grid-template-columns: 1fr 1.4fr;
+    padding-top: 22px;
+  }
+
+  .footer-bottom p {
+    color: #606760;
+    font-size: 8px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .footer-bottom p:last-child {
+    text-align: right;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .footer-top nav a:hover {
+      color: var(--oriel-text);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .site-footer {
+      padding: 0 18px 35px;
+    }
+
+    .footer-top {
+      align-items: start;
+      gap: 18px;
+      grid-template-columns: 1fr;
+      padding: 28px 0;
+    }
+
+    .footer-top > p {
+      text-align: left;
+    }
+
+    .footer-top nav {
+      flex-wrap: wrap;
+      justify-self: start;
+    }
+
+    .footer-bottom {
+      gap: 13px;
+      grid-template-columns: 1fr;
+    }
+
+    .footer-bottom p:last-child {
+      text-align: left;
+    }
+  }
+</style>

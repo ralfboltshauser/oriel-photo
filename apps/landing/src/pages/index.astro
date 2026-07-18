@@ -1,171 +1,36 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BrandMark from '../components/BrandMark.astro';
-import ProductFrame from '../components/ProductFrame.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import FeatureShowcase from '../components/FeatureShowcase.astro';
+import FinalCta from '../components/FinalCta.astro';
+import FitComparison from '../components/FitComparison.astro';
+import Hero from '../components/Hero.astro';
+import OwnershipStatement from '../components/OwnershipStatement.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import TrustFlow from '../components/TrustFlow.astro';
+import WorkflowStory from '../components/WorkflowStory.astro';
 
 const title = 'Oriel — From card to final. Fully yours.';
 const description =
-  'A local-first, open-source photo workspace for fast selection, essential editing, versions, and export.';
+  'A fast, local-first, open-source photo workspace for folder review, keyboard culling, essential editing, versions, and safe JPEG delivery.';
 ---
 
 <BaseLayout {title} {description}>
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Oriel home">
-      <BrandMark size={30} />
-      <span>Oriel</span>
-      <small>EARLY BUILD</small>
-    </a>
-    <nav aria-label="Primary navigation">
-      <a href="#workflow">Workflow</a>
-      <a href="#principles">Principles</a>
-      <a class="nav-cta" href="#status">Build status</a>
-    </nav>
-  </header>
-
-  <main id="content">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow">A LOCAL-FIRST PHOTO WORKSPACE</p>
-        <h1 id="hero-title">From card to final.<br /><span>Fully yours.</span></h1>
-        <p class="lede">
-          Cull a shoot, shape the keepers, and deliver the final set in one calm desktop
-          workspace. No account. No cloud dependency. Your originals stay untouched.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="#status">See what works today</a>
-          <a class="button secondary" href="#workflow"
-            >Explore the workflow <span aria-hidden="true">↓</span></a
-          >
-        </div>
-        <p class="truth-note">
-          Alpha scope: JPEG, PNG, and WebP. RAW processing and professional color parity are not
-          implemented yet.
-        </p>
-      </div>
-      <div class="hero-frame">
-        <ProductFrame />
-      </div>
-    </section>
-
-    <section class="proof-strip" aria-label="Product qualities">
-      <div><strong>Local by default</strong><span>Files remain in your folders</span></div>
-      <div>
-        <strong>Non-destructive</strong><span>Edits are recipes, never overwrites</span>
-      </div>
-      <div><strong>Cross-platform</strong><span>Built for macOS, Windows, and Linux</span></div>
-      <div><strong>Open source</strong><span>No subscription or account required</span></div>
-    </section>
-
-    <section class="workflow section" id="workflow" aria-labelledby="workflow-title">
-      <div class="section-intro">
-        <p class="eyebrow">ONE COHERENT PATH</p>
-        <h2 id="workflow-title">The whole shoot, without the maze.</h2>
-        <p>
-          Four stable stages keep the job legible. Controls appear when the work calls for them.
-        </p>
-      </div>
-      <ol class="workflow-grid">
-        <li>
-          <span class="step-number">01</span>
-          <h3>Library</h3>
-          <p>
-            Open a local folder and see exactly what is ready before anything enters the
-            catalog.
-          </p>
-        </li>
-        <li>
-          <span class="step-number">02</span>
-          <h3>Select</h3>
-          <p>
-            Pick, reject, rate, and compare at keyboard speed with feedback that is always
-            visible.
-          </p>
-        </li>
-        <li>
-          <span class="step-number">03</span>
-          <h3>Edit</h3>
-          <p>
-            Start with essential light and color. Reveal deeper controls only when you need
-            them.
-          </p>
-        </li>
-        <li>
-          <span class="step-number">04</span>
-          <h3>Deliver</h3>
-          <p>
-            Review the exact set, destination, and size before rendering collision-safe JPEGs.
-          </p>
-        </li>
-      </ol>
-    </section>
-
-    <section class="principles section" id="principles" aria-labelledby="principles-title">
-      <div class="principles-copy">
-        <p class="eyebrow">BUILT AROUND TRUST</p>
-        <h2 id="principles-title">Quiet until useful.<br />Explicit when it matters.</h2>
-        <p>
-          Oriel is designed for photographers who know their craft and want the software to get
-          out of the way. Every action has a visible result; every destructive-looking choice
-          explains what will actually happen.
-        </p>
-      </div>
-      <div class="principle-list">
-        <article>
-          <span class="principle-icon" aria-hidden="true">↵</span>
-          <div>
-            <h3>Immediate feedback</h3><p>
-              Selection, flags, edits, save state, and export progress never hide.
-            </p>
-          </div>
-        </article>
-        <article>
-          <span class="principle-icon" aria-hidden="true">⌘</span>
-          <div>
-            <h3>Progressive discovery</h3><p>
-              A small command surface first, with shortcuts and depth ready on demand.
-            </p>
-          </div>
-        </article>
-        <article>
-          <span class="principle-icon" aria-hidden="true">◇</span>
-          <div>
-            <h3>Reversible by design</h3><p>
-              Versions, undo, original preview, and recipes make experimentation safe.
-            </p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="status section" id="status" aria-labelledby="status-title">
-      <div>
-        <p class="eyebrow">HONEST ALPHA</p>
-        <h2 id="status-title">
-          A working vertical slice,<br />not a finished Lightroom replacement.
-        </h2>
-      </div>
-      <div class="status-detail">
-        <p>
-          The current build proves one complete local workflow: open a folder, cull, make
-          essential non-destructive adjustments, create versions, and export JPEGs. We will not
-          claim RAW or professional color parity until measured evidence supports it.
-        </p>
-        <a
-          class="button secondary"
-          href="https://github.com/ralfboltshauser/oriel-photo"
-          target="_blank"
-          rel="noreferrer">View the source on GitHub</a
-        >
-        <small>Oriel is a working name and still needs trademark and domain clearance.</small>
-      </div>
-    </section>
+  <SiteHeader />
+  <main id="content" data-motion-root>
+    <Hero />
+    <OwnershipStatement />
+    <WorkflowStory />
+    <BeforeAfter />
+    <FeatureShowcase />
+    <TrustFlow />
+    <FitComparison />
+    <FinalCta />
   </main>
+  <SiteFooter />
 
-  <footer>
-    <a class="brand" href="/" aria-label="Oriel home"
-      ><BrandMark size={26} /><span>Oriel</span></a
-    >
-    <p>From card to final. Fully yours.</p>
-    <p>Open source · Local first · Working name</p>
-  </footer>
+  <script>
+    import '../scripts/motion';
+  </script>
 </BaseLayout>

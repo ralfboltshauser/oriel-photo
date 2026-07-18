@@ -1,0 +1,642 @@
+---
+import exportPreview from '@oriel/fixtures/assets/photo-37.jpg';
+---
+
+<section class="trust-flow" data-reveal aria-labelledby="trust-flow-title">
+  <div class="trust-flow__header" data-reveal>
+    <p class="trust-flow__eyebrow">A FILE MODEL YOU CAN EXPLAIN</p>
+    <h2 id="trust-flow-title">The original is the source.<br />Never the experiment.</h2>
+    <p>
+      Oriel references the photographs already in your folder. Edits live as reversible
+      instructions, and delivery renders a separate file to the destination you choose.
+    </p>
+  </div>
+
+  <div class="trust-flow__canvas" data-reveal>
+    <ol
+      class="trust-flow__map"
+      aria-label="How Oriel keeps originals separate from edits and exports"
+    >
+      <li class="flow-stage flow-stage--source" data-reveal>
+        <div class="flow-stage__topline">
+          <span class="flow-stage__number">01</span>
+          <span class="flow-stage__mode flow-stage__mode--safe">REFERENCE</span>
+        </div>
+        <div class="folder-glyph" aria-hidden="true">
+          <span></span>
+          <i>12</i>
+        </div>
+        <div class="flow-stage__copy">
+          <small>SOURCE FOLDER</small>
+          <h3>Existing originals</h3>
+          <code>/Alpine weekend/ORL_1264.jpg</code>
+        </div>
+        <p class="flow-stage__consequence">
+          <span class="status-dot"></span>Bytes stay unchanged
+        </p>
+      </li>
+
+      <li class="flow-connector" aria-hidden="true">
+        <span>reads</span><i></i>
+      </li>
+
+      <li class="flow-stage flow-stage--recipe" data-reveal>
+        <div class="flow-stage__topline">
+          <span class="flow-stage__number">02</span>
+          <span class="flow-stage__mode">DESCRIBE</span>
+        </div>
+        <div class="recipe-glyph" aria-hidden="true">
+          <span class="recipe-glyph__back"></span>
+          <span class="recipe-glyph__front">
+            <b>VERSION 03</b>
+            <i style="--line: 72%"></i>
+            <i style="--line: 46%"></i>
+            <i style="--line: 61%"></i>
+          </span>
+        </div>
+        <div class="flow-stage__copy">
+          <small>EDIT RECIPE + VERSION</small>
+          <h3>Reversible instructions</h3>
+          <code>Exposure +0.35 · Highlights −28</code>
+        </div>
+        <p class="flow-stage__consequence">
+          <span class="version-mark">◇</span>Branch, compare, or reset
+        </p>
+      </li>
+
+      <li class="flow-connector" aria-hidden="true">
+        <span>renders</span><i></i>
+      </li>
+
+      <li class="flow-stage flow-stage--export" data-reveal>
+        <div class="flow-stage__topline">
+          <span class="flow-stage__number">03</span>
+          <span class="flow-stage__mode flow-stage__mode--new">WRITE NEW</span>
+        </div>
+        <div class="export-glyph" aria-hidden="true">
+          <span class="export-glyph__back"></span>
+          <span class="export-glyph__photo">
+            <img src={exportPreview.src} alt="" loading="lazy" width="1600" height="1067" />
+          </span>
+          <span class="export-glyph__plus">+</span>
+        </div>
+        <div class="flow-stage__copy">
+          <small>EXPORT DESTINATION</small>
+          <h3>A separate deliverable</h3>
+          <code>/Finals/Alpine-weekend-03.jpg</code>
+        </div>
+        <p class="flow-stage__consequence">
+          <span class="export-mark">+</span>New file, chosen destination
+        </p>
+      </li>
+    </ol>
+
+    <div class="trust-flow__legend" aria-label="File consequence legend">
+      <span><i class="status-dot"></i>Original remains unchanged</span>
+      <span><i class="legend-diamond">◇</i>Recipe remains reversible</span>
+      <span><i class="legend-plus">+</i>Export creates a new file</span>
+    </div>
+  </div>
+
+  <aside class="backup-note" data-reveal aria-labelledby="backup-note-title">
+    <div class="backup-note__mark" aria-hidden="true">!</div>
+    <div>
+      <h3 id="backup-note-title">Import is organization—not backup.</h3>
+      <p>
+        Oriel references your existing files; it does not make a safety copy. Keep a separate,
+        verified backup of every shoot before moving, deleting, or editing files outside Oriel.
+      </p>
+    </div>
+    <span class="backup-note__tag">PLAIN-LANGUAGE SAFETY</span>
+  </aside>
+</section>
+
+<style>
+  .trust-flow {
+    margin: 0 auto;
+    max-width: 1384px;
+    padding: 168px 32px;
+  }
+
+  .trust-flow__header {
+    display: grid;
+    gap: 32px clamp(40px, 7vw, 130px);
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.55fr);
+    margin-bottom: 70px;
+  }
+
+  .trust-flow__eyebrow {
+    color: var(--oriel-success);
+    font-size: 10px;
+    font-weight: 690;
+    grid-column: 1 / -1;
+    letter-spacing: 0.16em;
+    margin: 0 0 -9px;
+  }
+
+  .trust-flow h2 {
+    font-size: clamp(3rem, 5.7vw, 6.1rem);
+    font-weight: 520;
+    letter-spacing: -0.064em;
+    line-height: 0.92;
+    margin: 0;
+  }
+
+  .trust-flow__header > p:last-child {
+    align-self: end;
+    color: var(--oriel-text-secondary);
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0 0 4px;
+    max-width: 430px;
+  }
+
+  .trust-flow__canvas {
+    background:
+      radial-gradient(circle at 50% 42%, rgba(112, 211, 154, 0.055), transparent 28rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 36%), var(--oriel-surface);
+    border: 1px solid var(--oriel-divider-soft);
+    border-radius: 22px;
+    box-shadow: 0 35px 90px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    padding: clamp(30px, 4.5vw, 64px);
+    position: relative;
+  }
+
+  .trust-flow__canvas::before {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    content: '';
+    inset: 0;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 82%);
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .trust-flow__map {
+    align-items: stretch;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1fr) 72px minmax(0, 1fr);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .flow-stage {
+    background: rgba(11, 13, 12, 0.76);
+    border: 1px solid var(--oriel-divider);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    padding: 20px;
+  }
+
+  .flow-stage__topline {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .flow-stage__number {
+    color: var(--oriel-text-muted);
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 9px;
+  }
+
+  .flow-stage__mode {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 999px;
+    color: var(--oriel-text-muted);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 5px 7px;
+  }
+
+  .flow-stage__mode--safe {
+    background: rgba(112, 211, 154, 0.08);
+    border-color: rgba(112, 211, 154, 0.18);
+    color: var(--oriel-success);
+  }
+
+  .flow-stage__mode--new {
+    background: var(--oriel-coral-soft);
+    border-color: rgba(255, 112, 97, 0.2);
+    color: var(--oriel-coral);
+  }
+
+  .folder-glyph,
+  .recipe-glyph,
+  .export-glyph {
+    height: 146px;
+    margin: 35px auto 27px;
+    position: relative;
+    width: 154px;
+  }
+
+  .folder-glyph span {
+    background: linear-gradient(145deg, #303731, #1a1e1b);
+    border: 1px solid #434b44;
+    border-radius: 8px 13px 13px 13px;
+    bottom: 15px;
+    box-shadow:
+      0 22px 36px rgba(0, 0, 0, 0.3),
+      0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    left: 6px;
+    position: absolute;
+    right: 6px;
+    top: 29px;
+    transform: perspective(420px) rotateX(-7deg) rotateY(7deg);
+  }
+
+  .folder-glyph span::before {
+    background: #303731;
+    border: 1px solid #434b44;
+    border-bottom: 0;
+    border-radius: 7px 7px 0 0;
+    content: '';
+    height: 17px;
+    left: -1px;
+    position: absolute;
+    top: -14px;
+    width: 58px;
+  }
+
+  .folder-glyph i {
+    align-items: center;
+    background: var(--oriel-success);
+    border: 3px solid #171a18;
+    border-radius: 50%;
+    bottom: 7px;
+    color: #102219;
+    display: flex;
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 700;
+    height: 34px;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    width: 34px;
+  }
+
+  .recipe-glyph__back,
+  .recipe-glyph__front {
+    border: 1px solid #424943;
+    border-radius: 10px;
+    position: absolute;
+  }
+
+  .recipe-glyph__back {
+    background: #181c19;
+    inset: 19px 22px 7px 10px;
+    transform: rotate(-5deg);
+  }
+
+  .recipe-glyph__front {
+    background: linear-gradient(145deg, #2d332e, #191c1a);
+    box-shadow:
+      0 22px 40px rgba(0, 0, 0, 0.34),
+      0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    inset: 6px 6px 18px 22px;
+    padding: 17px;
+    transform: rotate(3deg);
+  }
+
+  .recipe-glyph__front b {
+    color: var(--oriel-text-secondary);
+    font-size: 7px;
+    letter-spacing: 0.12em;
+  }
+
+  .recipe-glyph__front i {
+    background: #111411;
+    border-radius: 999px;
+    height: 3px;
+    position: relative;
+  }
+
+  .recipe-glyph__front i::after {
+    background: var(--oriel-coral);
+    border-radius: inherit;
+    content: '';
+    inset: 0 auto 0 0;
+    position: absolute;
+    width: var(--line);
+  }
+
+  .export-glyph__back,
+  .export-glyph__photo {
+    border: 1px solid #444b45;
+    border-radius: 9px;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .export-glyph__back {
+    background: #202521;
+    inset: 20px 22px 3px 4px;
+    transform: rotate(-6deg);
+  }
+
+  .export-glyph__photo {
+    background: #1a1e1b;
+    box-shadow:
+      0 22px 40px rgba(0, 0, 0, 0.36),
+      0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    inset: 5px 5px 19px 20px;
+    transform: rotate(4deg);
+  }
+
+  .export-glyph__photo img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .export-glyph__plus {
+    align-items: center;
+    background: var(--oriel-coral);
+    border: 3px solid #171a18;
+    border-radius: 50%;
+    bottom: 4px;
+    color: #2a1210;
+    display: flex;
+    font-size: 18px;
+    font-weight: 470;
+    height: 35px;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    width: 35px;
+  }
+
+  .flow-stage__copy small {
+    color: var(--oriel-text-muted);
+    font-size: 8px;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+  }
+
+  .flow-stage__copy h3 {
+    font-size: 16px;
+    font-weight: 580;
+    letter-spacing: -0.025em;
+    margin: 8px 0 10px;
+  }
+
+  .flow-stage__copy code {
+    color: var(--oriel-text-muted);
+    display: block;
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 8px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .flow-stage__consequence {
+    align-items: center;
+    border-top: 1px solid var(--oriel-divider-soft);
+    color: var(--oriel-text-secondary);
+    display: flex;
+    font-size: 9px;
+    gap: 8px;
+    margin: auto 0 0;
+    padding-top: 16px;
+  }
+
+  .status-dot,
+  .legend-diamond,
+  .legend-plus,
+  .version-mark,
+  .export-mark {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-style: normal;
+    justify-content: center;
+  }
+
+  .status-dot {
+    background: var(--oriel-success);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(112, 211, 154, 0.09);
+    height: 6px;
+    width: 6px;
+  }
+
+  .version-mark,
+  .legend-diamond {
+    color: var(--oriel-text-secondary);
+    font-size: 14px;
+    height: 10px;
+    width: 10px;
+  }
+
+  .export-mark,
+  .legend-plus {
+    color: var(--oriel-coral);
+    font-size: 15px;
+    height: 10px;
+    width: 10px;
+  }
+
+  .flow-connector {
+    align-items: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    justify-content: center;
+  }
+
+  .flow-connector span {
+    color: var(--oriel-text-muted);
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 7px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .flow-connector i {
+    background: var(--oriel-divider);
+    height: 1px;
+    position: relative;
+    width: 42px;
+  }
+
+  .flow-connector i::after {
+    border-right: 1px solid var(--oriel-text-muted);
+    border-top: 1px solid var(--oriel-text-muted);
+    content: '';
+    height: 5px;
+    position: absolute;
+    right: 0;
+    top: -2px;
+    transform: rotate(45deg);
+    width: 5px;
+  }
+
+  .trust-flow__legend {
+    align-items: center;
+    border-top: 1px solid var(--oriel-divider-soft);
+    color: var(--oriel-text-muted);
+    display: flex;
+    font-size: 8px;
+    gap: 28px;
+    justify-content: center;
+    margin-top: 42px;
+    padding-top: 22px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .trust-flow__legend > span {
+    align-items: center;
+    display: inline-flex;
+    gap: 8px;
+  }
+
+  .backup-note {
+    align-items: center;
+    background: rgba(232, 180, 98, 0.055);
+    border: 1px solid rgba(232, 180, 98, 0.18);
+    border-radius: 12px;
+    display: grid;
+    gap: 17px;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    margin-top: 14px;
+    padding: 19px 22px;
+  }
+
+  .backup-note__mark {
+    align-items: center;
+    border: 1px solid rgba(232, 180, 98, 0.4);
+    border-radius: 50%;
+    color: var(--oriel-warning);
+    display: flex;
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 11px;
+    height: 28px;
+    justify-content: center;
+    width: 28px;
+  }
+
+  .backup-note h3 {
+    color: #e7d8bd;
+    font-size: 12px;
+    font-weight: 590;
+    margin: 0 0 4px;
+  }
+
+  .backup-note p {
+    color: #9b907d;
+    font-size: 10px;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 780px;
+  }
+
+  .backup-note__tag {
+    color: rgba(232, 180, 98, 0.62);
+    font-size: 7px;
+    font-weight: 680;
+    letter-spacing: 0.12em;
+    text-align: right;
+  }
+
+  @media (max-width: 1050px) {
+    .trust-flow__map {
+      grid-template-columns: 1fr;
+    }
+
+    .flow-stage {
+      min-height: 350px;
+    }
+
+    .flow-connector {
+      min-height: 65px;
+    }
+
+    .flow-connector i {
+      height: 36px;
+      width: 1px;
+    }
+
+    .flow-connector i::after {
+      border-bottom: 1px solid var(--oriel-text-muted);
+      border-right: 1px solid var(--oriel-text-muted);
+      border-top: 0;
+      bottom: 0;
+      right: -2px;
+      top: auto;
+      transform: rotate(45deg);
+    }
+  }
+
+  @media (max-width: 800px) {
+    .trust-flow {
+      padding: 112px 20px;
+    }
+
+    .trust-flow__header {
+      gap: 27px;
+      grid-template-columns: 1fr;
+      margin-bottom: 45px;
+    }
+
+    .trust-flow__eyebrow {
+      grid-column: auto;
+      margin-bottom: -8px;
+    }
+
+    .trust-flow__header > p:last-child {
+      font-size: 14px;
+    }
+
+    .trust-flow__canvas {
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .flow-stage {
+      min-height: 360px;
+    }
+
+    .trust-flow__legend {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .backup-note {
+      align-items: start;
+      grid-template-columns: 30px 1fr;
+      padding: 18px;
+    }
+
+    .backup-note__tag {
+      grid-column: 2;
+      text-align: left;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flow-stage,
+    .flow-connector,
+    .backup-note {
+      animation: none;
+      transition: none;
+    }
+  }
+</style>

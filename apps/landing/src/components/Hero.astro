@@ -1,0 +1,503 @@
+---
+import photo29 from '@oriel/fixtures/assets/photo-29.jpg';
+import { Image } from 'astro:assets';
+
+import editScreen from '../../../desktop/tests/e2e/__screenshots__/visual/04-edit.png';
+import ProductFrame from './ProductFrame.astro';
+
+const repositoryUrl = 'https://github.com/ralfboltshauser/oriel-photo';
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title" data-pointer-stage data-motion>
+  <div class="hero-atmosphere" aria-hidden="true">
+    <span class="hero-grid"></span>
+    <span class="hero-aura" data-pointer-aura></span>
+  </div>
+
+  <div class="hero-copy">
+    <p class="eyebrow hero-eyebrow" data-reveal>
+      <span aria-hidden="true"></span>A local-first photo workspace
+    </p>
+    <h1 id="hero-title">
+      <span class="headline-line"><span>From card to final.</span></span>
+      <span class="headline-line accent"><span>Fully yours.</span></span>
+    </h1>
+    <p class="hero-lede" data-reveal>
+      Cull a shoot, shape the keepers, and deliver the final set in one focused desktop
+      workspace. No account. No cloud dependency. Originals remain untouched.
+    </p>
+    <div class="hero-actions" data-reveal>
+      <a class="button primary" href="#workflow">
+        Explore the workflow
+        <span class="button-icon" aria-hidden="true">↓</span>
+      </a>
+      <a class="button secondary" href={repositoryUrl} target="_blank" rel="noreferrer">
+        View the source
+        <span class="button-icon" aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <p class="alpha-note" data-reveal>
+      <span>Early build</span>
+      <i aria-hidden="true"></i>
+      JPEG, PNG, and WebP today
+      <i aria-hidden="true"></i>
+      RAW is not implemented yet
+    </p>
+  </div>
+
+  <div class="hero-theatre" data-reveal>
+    <div class="scenic-frame" aria-hidden="true">
+      <Image
+        src={photo29}
+        alt=""
+        widths={[720, 1080, 1440]}
+        sizes="(max-width: 900px) 94vw, 1240px"
+        loading="eager"
+        quality={78}
+      />
+      <span class="scenic-shade"></span>
+    </div>
+
+    <div class="product-stage" data-tilt>
+      <ProductFrame
+        image={editScreen}
+        alt="Oriel Edit workspace showing a local landscape photograph, essential light and color controls, versions, and the shoot filmstrip"
+        loading="eager"
+        priority={true}
+        label="Alpine weekend · Edit"
+      />
+    </div>
+
+    <div class="floating-card source-card" aria-hidden="true">
+      <span class="card-icon">
+        <svg viewBox="0 0 24 24"
+          ><path d="M3.5 6.75h6l1.7 2h9.3v8.75a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2V6.75Z"
+          ></path></svg
+        >
+      </span>
+      <span><small>Source referenced in place</small><strong>Alpine weekend</strong></span>
+      <i></i>
+    </div>
+
+    <div class="floating-card saved-card" aria-hidden="true">
+      <span class="saved-check">✓</span>
+      <span><small>Catalog state</small><strong>Saved locally</strong></span>
+    </div>
+  </div>
+
+  <div class="hero-facts" aria-label="Oriel product qualities" data-reveal>
+    <div><strong>Local by default</strong><span>Files stay in your folders</span></div>
+    <div><strong>Reversible recipes</strong><span>Never overwrite an original</span></div>
+    <div><strong>Open source</strong><span>AGPL · no account required</span></div>
+    <div><strong>Cross-platform target</strong><span>macOS · Windows · Linux</span></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 1320px;
+    overflow: clip;
+    padding: 176px 24px 0;
+    position: relative;
+  }
+
+  .hero-atmosphere {
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
+    background-size: 84px 84px;
+    inset: 0;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 68%);
+    position: absolute;
+  }
+
+  .hero-aura {
+    background: radial-gradient(
+      circle at var(--pointer-x, 62%) var(--pointer-y, 33%),
+      rgba(255, 112, 97, 0.16),
+      rgba(255, 112, 97, 0.045) 18rem,
+      transparent 42rem
+    );
+    inset: -10%;
+    position: absolute;
+  }
+
+  .hero-copy {
+    margin: 0 auto;
+    max-width: 980px;
+    position: relative;
+    text-align: center;
+    z-index: 3;
+  }
+
+  .hero-eyebrow {
+    align-items: center;
+    display: inline-flex;
+    gap: 9px;
+    justify-content: center;
+    margin-bottom: 26px;
+  }
+
+  .hero-eyebrow span {
+    background: var(--oriel-coral);
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px var(--oriel-coral-soft);
+    height: 5px;
+    width: 5px;
+  }
+
+  h1 {
+    font-size: clamp(4.6rem, 9.25vw, 9rem);
+    font-weight: 520;
+    letter-spacing: -0.078em;
+    line-height: 0.82;
+    margin: 0;
+  }
+
+  .headline-line {
+    display: block;
+    overflow: hidden;
+    padding: 0 0.08em 0.08em;
+  }
+
+  .headline-line > span {
+    animation: headline-rise 900ms var(--oriel-ease-out) both;
+    display: block;
+    transform-origin: bottom;
+  }
+
+  .headline-line.accent {
+    color: var(--oriel-text-secondary);
+    padding-bottom: 0.18em;
+  }
+
+  .headline-line.accent > span {
+    animation-delay: 90ms;
+  }
+
+  @keyframes headline-rise {
+    from {
+      opacity: 0;
+      transform: translateY(105%) rotate(1.5deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) rotate(0);
+    }
+  }
+
+  .hero-lede {
+    color: var(--oriel-text-secondary);
+    font-size: clamp(1.05rem, 1.45vw, 1.28rem);
+    letter-spacing: -0.02em;
+    line-height: 1.58;
+    margin: 26px auto 0;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 9px;
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .alpha-note {
+    align-items: center;
+    color: var(--oriel-text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 10px;
+    gap: 9px;
+    justify-content: center;
+    line-height: 1.5;
+    margin: 17px auto 0;
+  }
+
+  .alpha-note span {
+    color: var(--oriel-warning);
+  }
+
+  .alpha-note i {
+    background: var(--oriel-divider);
+    border-radius: 50%;
+    height: 3px;
+    width: 3px;
+  }
+
+  .hero-theatre {
+    height: 680px;
+    margin: 104px auto 0;
+    max-width: 1320px;
+    perspective: 1600px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .scenic-frame {
+    border-radius: 42px 42px 0 0;
+    clip-path: polygon(7% 0, 93% 0, 100% 13%, 100% 100%, 0 100%, 0 13%);
+    inset: 30px -40px 0;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .scenic-frame :global(img) {
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+    transform: scale(1.06);
+    width: 100%;
+  }
+
+  .scenic-shade {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(7, 9, 8, 0.08),
+        rgba(7, 9, 8, 0.52) 72%,
+        var(--oriel-ink)
+      ),
+      radial-gradient(circle at 50% 30%, transparent 25%, rgba(11, 13, 12, 0.34) 82%);
+    inset: 0;
+    position: absolute;
+  }
+
+  .product-stage {
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%) perspective(1500px) rotateX(var(--tilt-x, 1.4deg))
+      rotateY(var(--tilt-y, -1.1deg));
+    transform-origin: center 75%;
+    width: min(1120px, 86vw);
+    will-change: transform;
+  }
+
+  .floating-card {
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+    align-items: center;
+    backdrop-filter: blur(18px) saturate(135%);
+    background: rgba(18, 21, 19, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 10px;
+    box-shadow:
+      0 20px 54px rgba(0, 0, 0, 0.36),
+      0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    display: flex;
+    gap: 10px;
+    padding: 11px 12px;
+    position: absolute;
+  }
+
+  .floating-card span:not(.card-icon, .saved-check) {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .floating-card small {
+    color: var(--oriel-text-muted);
+    font-size: 8px;
+  }
+
+  .floating-card strong {
+    font-size: 10px;
+    font-weight: 580;
+  }
+
+  .source-card {
+    left: 1.5%;
+    top: 33%;
+  }
+
+  .source-card > i {
+    background: var(--oriel-success);
+    border-radius: 50%;
+    height: 5px;
+    margin-left: 4px;
+    width: 5px;
+  }
+
+  .card-icon,
+  .saved-check {
+    align-items: center;
+    background: var(--oriel-surface-hover);
+    border-radius: 6px;
+    color: var(--oriel-text-secondary);
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+  }
+
+  .card-icon svg {
+    fill: none;
+    height: 14px;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+    width: 14px;
+  }
+
+  .saved-card {
+    right: 1.5%;
+    top: 54%;
+  }
+
+  .saved-check {
+    background: rgba(112, 211, 154, 0.12);
+    color: var(--oriel-success);
+    font-size: 12px;
+  }
+
+  .hero-facts {
+    border-bottom: 1px solid var(--oriel-divider-soft);
+    border-top: 1px solid var(--oriel-divider-soft);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 auto;
+    max-width: 1320px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .hero-facts div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 26px 22px;
+  }
+
+  .hero-facts div + div {
+    border-left: 1px solid var(--oriel-divider-soft);
+  }
+
+  .hero-facts strong {
+    font-size: 11px;
+    font-weight: 590;
+  }
+
+  .hero-facts span {
+    color: var(--oriel-text-muted);
+    font-size: 9px;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      min-height: auto;
+      padding-top: 150px;
+    }
+
+    .hero-theatre {
+      height: 560px;
+      margin-top: 76px;
+    }
+
+    .product-stage {
+      top: 40px;
+      width: 94vw;
+    }
+
+    .scenic-frame {
+      inset: 0 -16px;
+    }
+
+    .floating-card {
+      display: none;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .hero {
+      padding-left: 16px;
+      padding-right: 16px;
+      padding-top: 130px;
+    }
+
+    .hero-grid {
+      background-size: 54px 54px;
+    }
+
+    h1 {
+      font-size: clamp(3.45rem, 17vw, 5rem);
+      letter-spacing: -0.073em;
+      line-height: 0.86;
+    }
+
+    .hero-lede {
+      font-size: 15px;
+      margin-top: 20px;
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      align-items: stretch;
+      flex-direction: column;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 400px;
+    }
+
+    .hero-theatre {
+      height: 390px;
+      margin-top: 54px;
+    }
+
+    .product-stage {
+      top: 36px;
+      width: calc(100vw - 24px);
+    }
+
+    .scenic-frame {
+      border-radius: 22px 22px 0 0;
+      clip-path: polygon(5% 0, 95% 0, 100% 10%, 100% 100%, 0 100%, 0 10%);
+    }
+
+    .hero-facts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-facts div {
+      padding: 19px 14px;
+    }
+
+    .hero-facts div:nth-child(3) {
+      border-left: 0;
+    }
+
+    .hero-facts div:nth-child(n + 3) {
+      border-top: 1px solid var(--oriel-divider-soft);
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .floating-card {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: var(--oriel-surface);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .headline-line > span {
+      animation: none;
+    }
+
+    .product-stage {
+      transform: translateX(-50%);
+    }
+
+    .scenic-frame :global(img) {
+      transform: none;
+    }
+  }
+</style>

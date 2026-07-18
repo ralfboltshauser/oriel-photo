@@ -1,0 +1,185 @@
+---
+import BrandMark from './BrandMark.astro';
+
+const repositoryUrl = 'https://github.com/ralfboltshauser/oriel-photo';
+const limitsUrl = `${repositoryUrl}/blob/main/docs/known-limits.md`;
+---
+
+<section class="final-cta section-shell" aria-labelledby="final-title" data-reveal>
+  <div class="cta-atmosphere" aria-hidden="true">
+    <span class="cta-ring ring-one"></span>
+    <span class="cta-ring ring-two"></span>
+    <span class="cta-glow"></span>
+  </div>
+
+  <div class="cta-mark"><BrandMark size={58} /></div>
+  <p class="eyebrow">Built in public</p>
+  <h2 id="final-title">Help build the local photo workspace worth switching to.</h2>
+  <p class="cta-copy">
+    The complete supported-shoot workflow already runs. RAW, professional color, migration,
+    signed releases, and broad platform verification still have to earn their claims.
+  </p>
+  <div class="cta-actions">
+    <a class="button primary" href={repositoryUrl} target="_blank" rel="noreferrer">
+      Explore the source <span class="button-icon" aria-hidden="true">↗</span>
+    </a>
+    <a class="button secondary" href={limitsUrl} target="_blank" rel="noreferrer">
+      Read the current limits <span class="button-icon" aria-hidden="true">↗</span>
+    </a>
+  </div>
+
+  <div class="platform-status" aria-label="Distribution status">
+    <span><i class="configured" aria-hidden="true"></i>macOS target</span>
+    <span><i class="configured" aria-hidden="true"></i>Windows target</span>
+    <span><i class="validated" aria-hidden="true"></i>Linux validated</span>
+  </div>
+  <p class="release-note">
+    Packaging targets are configured. Only Linux is locally tested today. No signed release yet.
+  </p>
+</section>
+
+<style>
+  .final-cta {
+    align-items: center;
+    border: 1px solid var(--oriel-divider-soft);
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 120px;
+    overflow: hidden;
+    padding-bottom: 116px;
+    padding-top: 116px;
+    position: relative;
+    text-align: center;
+  }
+
+  .cta-atmosphere {
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .cta-glow {
+    background: radial-gradient(circle, rgba(255, 112, 97, 0.15), transparent 64%);
+    height: 620px;
+    left: 50%;
+    position: absolute;
+    top: 25%;
+    transform: translate(-50%, -50%);
+    width: 620px;
+  }
+
+  .cta-ring {
+    border: 1px solid rgba(255, 255, 255, 0.045);
+    border-radius: 50%;
+    left: 50%;
+    position: absolute;
+    top: 23%;
+    transform: translate(-50%, -50%);
+  }
+
+  .ring-one {
+    height: 520px;
+    width: 520px;
+  }
+
+  .ring-two {
+    height: 820px;
+    width: 820px;
+  }
+
+  .cta-mark,
+  .final-cta > p,
+  .final-cta h2,
+  .cta-actions,
+  .platform-status {
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-mark {
+    box-shadow: 0 24px 80px rgba(255, 112, 97, 0.18);
+    margin-bottom: 26px;
+  }
+
+  .final-cta .eyebrow {
+    margin-bottom: 21px;
+  }
+
+  .final-cta h2 {
+    font-size: clamp(3rem, 6.7vw, 6.6rem);
+    max-width: 1000px;
+  }
+
+  .cta-copy {
+    color: var(--oriel-text-secondary);
+    font-size: 15px;
+    line-height: 1.62;
+    margin: 25px auto 0;
+    max-width: 660px;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 9px;
+    justify-content: center;
+    margin-top: 31px;
+  }
+
+  .platform-status {
+    border-top: 1px solid var(--oriel-divider-soft);
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 52px;
+    padding-top: 22px;
+  }
+
+  .platform-status span {
+    align-items: center;
+    color: var(--oriel-text-secondary);
+    display: flex;
+    font-size: 9px;
+    gap: 7px;
+  }
+
+  .platform-status i {
+    background: var(--oriel-warning);
+    border-radius: 50%;
+    height: 5px;
+    width: 5px;
+  }
+
+  .platform-status .validated {
+    background: var(--oriel-success);
+  }
+
+  .release-note {
+    color: var(--oriel-text-muted);
+    font-size: 8px;
+    line-height: 1.5;
+    margin: 13px 0 0;
+  }
+
+  @media (max-width: 680px) {
+    .final-cta {
+      border-left: 0;
+      border-radius: 0;
+      border-right: 0;
+      margin-bottom: 68px;
+      padding: 82px 20px;
+    }
+
+    .cta-actions {
+      align-items: stretch;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .platform-status {
+      flex-wrap: wrap;
+      gap: 10px 16px;
+    }
+  }
+</style>

@@ -1,0 +1,137 @@
+<section class="ownership section-shell" id="ownership" aria-labelledby="ownership-title">
+  <p class="eyebrow" data-reveal>A focused product bet</p>
+  <div class="ownership-grid">
+    <h2 id="ownership-title" data-reveal>
+      If your photography lives on your computer, your workflow can too.
+    </h2>
+    <div class="ownership-copy" data-reveal>
+      <p>
+        Some photographers need cloud libraries, mobile sync, Adobe Photoshop software, and an
+        entire creative ecosystem. Others need a fast path through one local shoot.
+      </p>
+      <p>Oriel is being built for the second group.</p>
+    </div>
+  </div>
+  <div class="focus-line" aria-label="Oriel's focused workflow" data-reveal>
+    <div><small>01 · Start</small><strong>A folder you choose</strong></div>
+    <span class="line-segment" aria-hidden="true"><i></i></span>
+    <div><small>02 · Work</small><strong>One calm workspace</strong></div>
+    <span class="line-segment" aria-hidden="true"><i></i></span>
+    <div><small>03 · Finish</small><strong>JPEGs where you expect</strong></div>
+  </div>
+</section>
+
+<style>
+  .ownership {
+    padding-bottom: 180px;
+    padding-top: 180px;
+  }
+
+  .ownership-grid {
+    align-items: end;
+    display: grid;
+    gap: 80px;
+    grid-template-columns: 1.25fr 0.55fr;
+  }
+
+  h2 {
+    font-size: clamp(3.5rem, 7vw, 7rem);
+    max-width: 930px;
+  }
+
+  .ownership-copy p {
+    color: var(--oriel-text-secondary);
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+
+  .ownership-copy p:last-child {
+    color: var(--oriel-text);
+    margin-bottom: 7px;
+  }
+
+  .focus-line {
+    align-items: center;
+    border-bottom: 1px solid var(--oriel-divider-soft);
+    border-top: 1px solid var(--oriel-divider-soft);
+    display: grid;
+    gap: 20px;
+    grid-template-columns: auto 1fr auto 1fr auto;
+    margin-top: 94px;
+    padding: 28px 0;
+  }
+
+  .focus-line div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .focus-line small {
+    color: var(--oriel-text-muted);
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 8px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .focus-line strong {
+    font-size: 11px;
+    font-weight: 570;
+  }
+
+  .line-segment {
+    background: var(--oriel-divider-soft);
+    height: 1px;
+    position: relative;
+  }
+
+  .line-segment i {
+    background: var(--oriel-coral);
+    border-radius: 50%;
+    height: 5px;
+    position: absolute;
+    right: 0;
+    top: -2px;
+    width: 5px;
+  }
+
+  @media (max-width: 800px) {
+    .ownership-grid {
+      align-items: start;
+      gap: 34px;
+      grid-template-columns: 1fr;
+    }
+
+    .ownership-copy {
+      max-width: 560px;
+    }
+
+    .focus-line {
+      align-items: start;
+      grid-template-columns: 1fr;
+      margin-top: 62px;
+    }
+
+    .line-segment {
+      height: 28px;
+      margin-left: 3px;
+      width: 1px;
+    }
+
+    .line-segment i {
+      bottom: 0;
+      left: -2px;
+      right: auto;
+      top: auto;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .ownership {
+      padding-bottom: 100px;
+      padding-top: 100px;
+    }
+  }
+</style>

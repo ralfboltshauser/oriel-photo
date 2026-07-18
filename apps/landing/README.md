@@ -8,12 +8,36 @@ or catalog state.
 pnpm dev:landing
 pnpm --filter @oriel/landing build
 pnpm --filter @oriel/landing typecheck
+pnpm --filter @oriel/landing test:e2e
+pnpm --filter @oriel/landing test:a11y
 ```
 
-The current page is an honest early-build announcement, not a download page. Before publishing it:
+## Page structure
 
-- replace the repository placeholder only when a stable public URL exists;
-- add real download links only after signed artifacts and update channels exist;
-- add trademark/domain clearance and a real privacy statement;
-- replace fixture photography if the final marketing usage needs different licensing;
-- add social-card artwork and production analytics only with an explicit privacy decision.
+- `src/pages/index.astro` only assembles the narrative.
+- Section components own their markup and responsive styling.
+- `ProductFrame.astro` renders real visual-test captures from the desktop app.
+- `src/scripts/motion.ts` owns the small progressive-enhancement layer: reveal state, page progress,
+  pointer lighting/tilt, workflow-stage mapping, and the before/after control.
+- The page remains complete without client JavaScript. Reduced motion removes spatial animation,
+  and hover treatment is limited to fine-pointer devices.
+
+Playwright covers desktop, mobile, reduced motion, no-JavaScript content, keyboard interaction,
+horizontal overflow, cursor/scroll feedback, console errors, and automated WCAG A/AA checks. The
+desktop app's visual suite owns the product screenshots used by the site, including the dedicated
+Select capture.
+
+## Publishing contract
+
+The site is an honest early-build story, not a download page. Keep these constraints intact:
+
+- Never imply RAW, professional color, Lightroom migration, production stability, or signed
+  cross-platform releases before there is evidence.
+- Refer to Lightroom only for factual product-fit comparison. Do not use Adobe logos, screenshots,
+  icons, or trade dress; preserve the attribution and independence disclaimer.
+- Add download links only after signed artifacts and update channels exist.
+- Oriel remains a working name pending trademark and domain clearance.
+- Demo photography provenance lives in `docs/fixture-credits.md`; re-check it before a materially new
+  campaign.
+- `public/og.jpg` is a crop of the reviewed hero and should be regenerated when the hero changes.
+- Do not add analytics without an explicit privacy decision.

@@ -19,6 +19,11 @@ test('@visual captures the critical product surfaces', async ({ page }) => {
   await waitForVisualReady(page);
   await expect(page).toHaveScreenshot('03-library.png');
 
+  await page.keyboard.press('e');
+  await expect(page.getByRole('heading', { name: 'Selects' })).toBeVisible();
+  await waitForVisualReady(page);
+  await expect(page).toHaveScreenshot('03-select.png');
+
   await page.keyboard.press('d');
   await expect(page.getByRole('img', { name: /Edited ORL_1042\.jpg/ })).toBeVisible();
   await expect(page.locator('.canvas-status')).toHaveCount(0);

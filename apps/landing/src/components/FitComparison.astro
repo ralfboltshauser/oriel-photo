@@ -1,0 +1,279 @@
+---
+const currentLimitsUrl =
+  'https://github.com/ralfboltshauser/oriel-photo/blob/main/docs/known-limits.md';
+const adobePlansUrl = 'https://www.adobe.com/creativecloud/photography/compare-plans.html';
+---
+
+<section class="fit section-shell" id="fit" aria-labelledby="fit-title">
+  <div class="fit-heading" data-reveal>
+    <p class="eyebrow">A narrower promise</p>
+    <h2 id="fit-title">Not a clone.<br />A smaller contract.</h2>
+    <p>
+      Adobe Photoshop Lightroom Classic software is a mature RAW and catalog system. Oriel does
+      not match those capabilities today. Its first job is narrower: finish one supported local
+      shoot through review, keyboard culling, essential edits, versions, and JPEG delivery.
+    </p>
+  </div>
+
+  <div class="fit-grid" data-reveal>
+    <article class="fit-card oriel-fit">
+      <div class="fit-card-header">
+        <span class="fit-mark">O</span>
+        <div><small>Explore Oriel when…</small><h3>Your next shoot is the test.</h3></div>
+      </div>
+      <ul>
+        <li><span>✓</span>Your files are JPEG, PNG, or WebP.</li>
+        <li><span>✓</span>The workflow stays on one computer.</li>
+        <li><span>✓</span>Essential global adjustments are enough.</li>
+        <li><span>✓</span>You want source code you can inspect and shape.</li>
+        <li><span>✓</span>No account or subscription is part of the brief.</li>
+      </ul>
+      <p class="card-foot">Best evaluated on a new, supported shoot.</p>
+    </article>
+
+    <article class="fit-card lightroom-fit">
+      <div class="fit-card-header">
+        <span class="fit-mark neutral" aria-hidden="true">—</span>
+        <div>
+          <small>Keep Lightroom Classic when…</small><h3>Your archive needs mature depth.</h3>
+        </div>
+      </div>
+      <ul>
+        <li><span>—</span>Camera RAW and professional color are essential.</li>
+        <li><span>—</span>Your catalog and existing edit history must migrate.</li>
+        <li><span>—</span>You depend on masks, healing, denoise, tethering, or print.</li>
+        <li><span>—</span>Cloud, mobile, Photoshop, or deep metadata matter.</li>
+        <li><span>—</span>You need a signed, production-ready release today.</li>
+      </ul>
+      <p class="card-foot">Do not move an established archive to Oriel yet.</p>
+    </article>
+  </div>
+
+  <div class="comparison-note" data-reveal>
+    <span aria-hidden="true">i</span>
+    <p>
+      This is a product-fit comparison, not a parity claim. Read Oriel's
+      <a href={currentLimitsUrl} target="_blank" rel="noreferrer">current limits</a> and
+      <a href={adobePlansUrl} target="_blank" rel="noreferrer">Adobe's product description</a>
+      before deciding. Oriel is independent and not affiliated with Adobe.
+    </p>
+  </div>
+</section>
+
+<style>
+  .fit {
+    padding-bottom: 170px;
+    padding-top: 170px;
+  }
+
+  .fit-heading {
+    display: grid;
+    gap: 30px 90px;
+    grid-template-columns: 1fr 0.72fr;
+  }
+
+  .fit-heading .eyebrow {
+    grid-column: 1 / -1;
+    margin-bottom: -5px;
+  }
+
+  .fit-heading h2 {
+    margin: 0;
+  }
+
+  .fit-heading > p:last-child {
+    align-self: end;
+    color: var(--oriel-text-secondary);
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0 0 6px;
+    max-width: 560px;
+  }
+
+  .fit-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 76px;
+  }
+
+  .fit-card {
+    background: var(--oriel-surface);
+    border: 1px solid var(--oriel-divider-soft);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 520px;
+    padding: 34px;
+    position: relative;
+  }
+
+  .oriel-fit {
+    background:
+      radial-gradient(circle at 8% 4%, rgba(255, 112, 97, 0.1), transparent 15rem),
+      var(--oriel-surface);
+    border-color: rgba(255, 112, 97, 0.27);
+    box-shadow: 0 1px 0 rgba(255, 112, 97, 0.12) inset;
+  }
+
+  .fit-card-header {
+    align-items: center;
+    border-bottom: 1px solid var(--oriel-divider-soft);
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 42px 1fr;
+    padding-bottom: 28px;
+  }
+
+  .fit-mark {
+    align-items: center;
+    background: var(--oriel-coral);
+    border-radius: 10px;
+    color: #24120f;
+    display: flex;
+    font-size: 15px;
+    font-weight: 700;
+    height: 42px;
+    justify-content: center;
+    width: 42px;
+  }
+
+  .fit-mark.neutral {
+    background: var(--oriel-surface-hover);
+    border: 1px solid var(--oriel-divider);
+    color: var(--oriel-text-secondary);
+    font-size: 11px;
+  }
+
+  .fit-card-header small {
+    color: var(--oriel-text-muted);
+    display: block;
+    font-size: 9px;
+    margin-bottom: 4px;
+  }
+
+  .fit-card h3 {
+    font-size: 17px;
+    font-weight: 570;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+
+  .fit-card ul {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0;
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+
+  .fit-card li {
+    align-items: start;
+    border-bottom: 1px solid var(--oriel-divider-soft);
+    color: var(--oriel-text-secondary);
+    display: grid;
+    font-size: 12px;
+    gap: 11px;
+    grid-template-columns: 18px 1fr;
+    line-height: 1.5;
+    padding: 15px 0;
+  }
+
+  .fit-card li span {
+    color: var(--oriel-coral);
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 10px;
+    padding-top: 2px;
+  }
+
+  .lightroom-fit li span {
+    color: var(--oriel-text-muted);
+  }
+
+  .card-foot {
+    color: var(--oriel-text-muted);
+    font-size: 9px;
+    line-height: 1.5;
+    margin: 22px 0 0;
+  }
+
+  .comparison-note {
+    align-items: start;
+    border-bottom: 1px solid var(--oriel-divider-soft);
+    border-top: 1px solid var(--oriel-divider-soft);
+    display: grid;
+    gap: 11px;
+    grid-template-columns: 22px 1fr;
+    margin-top: 30px;
+    padding: 18px 0;
+  }
+
+  .comparison-note > span {
+    align-items: center;
+    border: 1px solid var(--oriel-divider);
+    border-radius: 50%;
+    color: var(--oriel-text-muted);
+    display: flex;
+    font-family: Georgia, serif;
+    font-size: 10px;
+    height: 17px;
+    justify-content: center;
+    margin-top: 1px;
+    width: 17px;
+  }
+
+  .comparison-note p {
+    color: var(--oriel-text-muted);
+    font-size: 9px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .comparison-note a {
+    color: var(--oriel-text-secondary);
+    text-decoration: underline;
+    text-decoration-color: var(--oriel-divider);
+    text-underline-offset: 3px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .comparison-note a:hover {
+      color: var(--oriel-text);
+      text-decoration-color: var(--oriel-text-muted);
+    }
+  }
+
+  @media (max-width: 850px) {
+    .fit-heading {
+      gap: 24px;
+      grid-template-columns: 1fr;
+    }
+
+    .fit-heading .eyebrow {
+      grid-column: auto;
+    }
+
+    .fit-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .fit {
+      padding-bottom: 100px;
+      padding-top: 100px;
+    }
+
+    .fit-grid {
+      margin-top: 48px;
+    }
+
+    .fit-card {
+      border-radius: 12px;
+      min-height: auto;
+      padding: 24px 20px;
+    }
+  }
+</style>

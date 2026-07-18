@@ -1,0 +1,423 @@
+---
+import comparisonPhoto from '@oriel/fixtures/assets/photo-37.jpg';
+---
+
+<section
+  class="before-after"
+  data-before-after
+  data-reveal
+  style="--comparison: 58%;"
+  aria-labelledby="before-after-title"
+>
+  <div class="before-after__intro" data-reveal>
+    <div>
+      <p class="before-after__eyebrow">A REVERSIBLE POINT OF VIEW</p>
+      <h2 id="before-after-title">Shape the frame.<br />Never seal it shut.</h2>
+    </div>
+    <p class="before-after__lede">
+      Every adjustment is an instruction beside the photograph—not a change to the original.
+      Compare at any moment, branch another version, or return to where you began.
+    </p>
+  </div>
+
+  <figure class="comparison" data-reveal>
+    <div class="comparison__viewport">
+      <img
+        class="comparison__image comparison__image--original"
+        src={comparisonPhoto.src}
+        alt="A misty coastline with evergreen shrubs and red flowers in the foreground"
+        loading="lazy"
+        width="1600"
+        height="1067"
+      />
+
+      <div class="comparison__graded" aria-hidden="true">
+        <img
+          class="comparison__image comparison__image--grade"
+          src={comparisonPhoto.src}
+          alt=""
+          loading="lazy"
+          width="1600"
+          height="1067"
+        />
+      </div>
+
+      <span class="comparison__label comparison__label--before" aria-hidden="true"
+        >Fixture original</span
+      >
+      <span class="comparison__label comparison__label--after" aria-hidden="true"
+        >Illustrative grade</span
+      >
+
+      <div class="comparison__divider" aria-hidden="true">
+        <span class="comparison__handle">
+          <svg viewBox="0 0 22 12" width="22" height="12" fill="none">
+            <path
+              d="m7 2-4 4 4 4M15 2l4 4-4 4"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </span>
+      </div>
+
+      <label class="comparison__control-label" for="grade-comparison">
+        Drag to compare the original and illustrative grade. Use the left and right arrow keys
+        for precise control.
+      </label>
+      <input
+        class="comparison__control"
+        id="grade-comparison"
+        data-comparison-control
+        type="range"
+        min="0"
+        max="100"
+        value="58"
+        step="1"
+        aria-describedby="grade-comparison-note"
+      />
+    </div>
+
+    <figcaption class="comparison__caption" id="grade-comparison-note">
+      <span>
+        <strong>One source. Any number of versions.</strong>
+        The right side is an illustrative CSS grade of an Oriel fixture—not a claim of current processing
+        or export color parity.
+      </span>
+      <span class="comparison__recipe" aria-label="Example illustrative edit recipe">
+        <span><small>EXPOSURE</small><b>+0.35</b></span>
+        <span><small>HIGHLIGHTS</small><b>−28</b></span>
+        <span><small>COLOR</small><b>+06</b></span>
+      </span>
+    </figcaption>
+  </figure>
+</section>
+
+<style>
+  .before-after {
+    margin: 0 auto;
+    max-width: 1384px;
+    padding: 168px 32px;
+  }
+
+  .before-after__intro {
+    align-items: end;
+    display: grid;
+    gap: clamp(40px, 8vw, 150px);
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.55fr);
+    margin-bottom: 68px;
+  }
+
+  .before-after__eyebrow {
+    color: var(--oriel-coral);
+    font-size: 10px;
+    font-weight: 690;
+    letter-spacing: 0.16em;
+    margin: 0 0 21px;
+  }
+
+  .before-after h2 {
+    font-size: clamp(3rem, 6.1vw, 6.6rem);
+    font-weight: 520;
+    letter-spacing: -0.065em;
+    line-height: 0.91;
+    margin: 0;
+  }
+
+  .before-after__lede {
+    color: var(--oriel-text-secondary);
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0 0 5px;
+    max-width: 430px;
+  }
+
+  .comparison {
+    margin: 0;
+  }
+
+  .comparison__viewport {
+    aspect-ratio: 16 / 9;
+    background: #101311;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 22px;
+    box-shadow:
+      0 48px 120px rgba(0, 0, 0, 0.42),
+      0 1px 0 rgba(255, 255, 255, 0.07) inset;
+    isolation: isolate;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .comparison__viewport::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(8, 11, 9, 0.2),
+        transparent 22%,
+        transparent 70%,
+        rgba(8, 11, 9, 0.28)
+      ),
+      linear-gradient(
+        90deg,
+        rgba(8, 11, 9, 0.14),
+        transparent 16%,
+        transparent 84%,
+        rgba(8, 11, 9, 0.14)
+      );
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 3;
+  }
+
+  .comparison__image,
+  .comparison__graded {
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  .comparison__image {
+    display: block;
+    object-fit: cover;
+  }
+
+  .comparison__image--original {
+    filter: none;
+  }
+
+  .comparison__graded {
+    clip-path: inset(0 calc(100% - var(--comparison)) 0 0);
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .comparison__image--grade {
+    filter: saturate(1.22) contrast(1.11) brightness(0.94) hue-rotate(-4deg);
+  }
+
+  .comparison__label {
+    align-items: center;
+    backdrop-filter: blur(16px);
+    background: rgba(11, 13, 12, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    color: rgba(242, 241, 236, 0.9);
+    display: inline-flex;
+    font-size: 9px;
+    font-weight: 620;
+    letter-spacing: 0.08em;
+    padding: 8px 11px;
+    position: absolute;
+    text-transform: uppercase;
+    top: 22px;
+    z-index: 4;
+  }
+
+  .comparison__label--before {
+    right: 22px;
+  }
+
+  .comparison__label--after {
+    left: 22px;
+  }
+
+  .comparison__divider {
+    background: rgba(255, 255, 255, 0.88);
+    bottom: 0;
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.32);
+    left: var(--comparison);
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    width: 1px;
+    z-index: 5;
+  }
+
+  .comparison__handle {
+    align-items: center;
+    background: rgba(242, 241, 236, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 50%;
+    box-shadow:
+      0 8px 28px rgba(0, 0, 0, 0.36),
+      0 1px 0 #fff inset;
+    color: #1d211e;
+    display: flex;
+    height: 46px;
+    justify-content: center;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 46px;
+  }
+
+  .comparison__control-label {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .comparison__control {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: ew-resize;
+    height: 100%;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 6;
+  }
+
+  .comparison__control:focus-visible {
+    border-radius: 22px;
+    outline: 3px solid var(--oriel-focus);
+    outline-offset: -5px;
+  }
+
+  .comparison__control::-webkit-slider-runnable-track {
+    background: transparent;
+    height: 100%;
+  }
+
+  .comparison__control::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    height: 100%;
+    width: 46px;
+  }
+
+  .comparison__control::-moz-range-track {
+    background: transparent;
+    border: 0;
+    height: 100%;
+  }
+
+  .comparison__control::-moz-range-thumb {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    height: 100%;
+    width: 46px;
+  }
+
+  .comparison__caption {
+    align-items: start;
+    color: var(--oriel-text-muted);
+    display: grid;
+    font-size: 11px;
+    gap: 44px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    line-height: 1.55;
+    padding: 23px 2px 0;
+  }
+
+  .comparison__caption > span:first-child {
+    max-width: 630px;
+  }
+
+  .comparison__caption strong {
+    color: var(--oriel-text);
+    display: block;
+    font-size: 12px;
+    font-weight: 570;
+    margin-bottom: 4px;
+  }
+
+  .comparison__recipe {
+    border-left: 1px solid var(--oriel-divider-soft);
+    display: flex;
+    gap: clamp(20px, 3vw, 42px);
+    padding-left: 28px;
+  }
+
+  .comparison__recipe span {
+    display: grid;
+    gap: 4px;
+  }
+
+  .comparison__recipe small {
+    color: var(--oriel-text-muted);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .comparison__recipe b {
+    color: var(--oriel-text-secondary);
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 800px) {
+    .before-after {
+      padding: 112px 20px;
+    }
+
+    .before-after__intro {
+      align-items: start;
+      gap: 28px;
+      grid-template-columns: 1fr;
+      margin-bottom: 45px;
+    }
+
+    .before-after__lede {
+      font-size: 14px;
+    }
+
+    .comparison__viewport {
+      aspect-ratio: 4 / 3;
+      border-radius: 16px;
+    }
+
+    .comparison__image {
+      object-position: 58% center;
+    }
+
+    .comparison__label {
+      font-size: 8px;
+      padding: 7px 9px;
+      top: 14px;
+    }
+
+    .comparison__label--before {
+      right: 14px;
+    }
+
+    .comparison__label--after {
+      left: 14px;
+    }
+
+    .comparison__caption {
+      gap: 22px;
+      grid-template-columns: 1fr;
+    }
+
+    .comparison__recipe {
+      border-left: 0;
+      border-top: 1px solid var(--oriel-divider-soft);
+      justify-content: space-between;
+      padding: 18px 0 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .comparison__graded {
+      transition: none;
+    }
+  }
+</style>

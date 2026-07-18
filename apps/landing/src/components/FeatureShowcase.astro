@@ -1,0 +1,411 @@
+---
+import commandScreen from '../../../desktop/tests/e2e/__screenshots__/visual/05-command-palette.png';
+import feedbackScreen from '../../../desktop/tests/e2e/__screenshots__/visual/08-feedback-composer.png';
+import ProductFrame from './ProductFrame.astro';
+---
+
+<section class="discovery section-shell" id="discovery" aria-labelledby="discovery-title">
+  <div class="section-heading" data-reveal>
+    <p class="eyebrow">Progressive discovery</p>
+    <h2 id="discovery-title">Power should arrive<br />when you need it.</h2>
+    <p>
+      The stage stays stable. The next action stays visible. Deeper controls, shortcuts, and
+      commands remain one gesture away.
+    </p>
+  </div>
+
+  <div class="showcase-grid">
+    <article class="showcase-card command-card" data-reveal>
+      <div class="card-copy">
+        <span class="card-index">01</span>
+        <div>
+          <h3>Find anything. Learn nothing first.</h3>
+          <p>
+            Search plain language or familiar photography terms. Commands show their shortcut as
+            you discover them.
+          </p>
+        </div>
+        <span class="shortcut" aria-label="Control or Command K">
+          <kbd>⌘</kbd><kbd>K</kbd>
+        </span>
+      </div>
+      <div class="command-visual">
+        <ProductFrame
+          image={commandScreen}
+          alt="Oriel command palette listing navigation, original preview, versions, copy and paste edits, and folder import"
+          loading="lazy"
+          label="Find a tool or action"
+        />
+      </div>
+    </article>
+
+    <article class="showcase-card layers-card" data-reveal>
+      <div class="card-copy compact">
+        <span class="card-index">02</span>
+        <div>
+          <h3>Essentials first. Depth on request.</h3>
+          <p>
+            Orientation is permanent. Context appears when it matters. Expert recall stays on
+            demand.
+          </p>
+        </div>
+      </div>
+      <div class="discovery-stack" aria-label="Three levels of progressive interface depth">
+        <div class="depth-layer orientation">
+          <span class="depth-label">Always visible</span>
+          <strong>Library&nbsp; → &nbsp;Select&nbsp; → &nbsp;Edit&nbsp; → &nbsp;Deliver</strong>
+        </div>
+        <div class="depth-layer context">
+          <span class="depth-label">In context</span>
+          <strong>Pick · Reject · Rate</strong>
+          <span class="key-row"><kbd>P</kbd><kbd>X</kbd><kbd>1–5</kbd></span>
+        </div>
+        <div class="depth-layer depth">
+          <span class="depth-label">On request</span>
+          <strong>Versions · Full light controls · Crop</strong>
+          <span class="plus">+</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="showcase-card feedback-card" id="feedback" data-reveal>
+      <div class="feedback-visual">
+        <ProductFrame
+          image={feedbackScreen}
+          alt="Oriel feedback mode with the Exposure control selected and a focused feedback composer"
+          loading="lazy"
+          label="Interface feedback mode"
+        />
+      </div>
+      <div class="card-copy feedback-copy">
+        <span class="card-index">03</span>
+        <div>
+          <h3>Point at what should be better.</h3>
+          <p>
+            Press Cmd/Ctrl + Shift + F, select any interface element, and describe the change.
+            Oriel opens a reviewable GitHub issue draft—without asking for a token.
+          </p>
+        </div>
+        <span class="shortcut wide" aria-label="Control or Command Shift F">
+          <kbd>⌘/Ctrl</kbd><kbd>⇧</kbd><kbd>F</kbd>
+        </span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .discovery {
+    padding-bottom: 170px;
+    padding-top: 170px;
+  }
+
+  .section-heading {
+    max-width: 760px;
+  }
+
+  .section-heading > p:last-child {
+    color: var(--oriel-text-secondary);
+    font-size: 16px;
+    line-height: 1.62;
+    max-width: 610px;
+  }
+
+  .showcase-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 72px;
+  }
+
+  .showcase-card {
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent 38%), var(--oriel-surface);
+    border: 1px solid var(--oriel-divider-soft);
+    border-radius: 18px;
+    min-height: 480px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .command-card,
+  .feedback-card {
+    grid-column: 1 / -1;
+  }
+
+  .card-copy {
+    align-items: start;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 36px minmax(0, 560px) 1fr;
+    padding: 34px 38px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-copy.compact {
+    grid-template-columns: 36px 1fr;
+  }
+
+  .card-index {
+    color: var(--oriel-coral);
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 9px;
+    padding-top: 5px;
+  }
+
+  h3 {
+    font-size: clamp(1.35rem, 2.4vw, 2rem);
+    font-weight: 540;
+    letter-spacing: -0.045em;
+    margin: 0 0 11px;
+  }
+
+  .card-copy p {
+    color: var(--oriel-text-muted);
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 520px;
+  }
+
+  .shortcut {
+    align-items: center;
+    display: inline-flex;
+    gap: 4px;
+    justify-self: end;
+  }
+
+  .shortcut kbd,
+  .key-row kbd {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom-color: rgba(255, 255, 255, 0.17);
+    border-radius: 5px;
+    color: var(--oriel-text-secondary);
+    display: inline-flex;
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 9px;
+    height: 27px;
+    justify-content: center;
+    min-width: 27px;
+    padding: 0 7px;
+  }
+
+  .command-visual {
+    margin: 8px auto -21%;
+    max-width: 1100px;
+    padding: 0 34px;
+    transform: perspective(1400px) rotateX(3.5deg);
+    transform-origin: top center;
+  }
+
+  .layers-card {
+    grid-column: 1 / -1;
+    min-height: 560px;
+  }
+
+  .discovery-stack {
+    height: 340px;
+    margin: 20px auto 0;
+    max-width: 720px;
+    perspective: 1200px;
+    position: relative;
+  }
+
+  .depth-layer {
+    align-items: center;
+    background: color-mix(in srgb, var(--oriel-surface-raised) 94%, transparent);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 11px;
+    box-shadow: 0 28px 58px rgba(0, 0, 0, 0.28);
+    display: flex;
+    justify-content: space-between;
+    left: 50%;
+    min-height: 94px;
+    padding: 22px 24px;
+    position: absolute;
+    transform: translateX(-50%);
+    width: min(620px, 86%);
+  }
+
+  .depth-layer strong {
+    font-size: 12px;
+    font-weight: 560;
+  }
+
+  .depth-label {
+    color: var(--oriel-text-muted);
+    font-family: 'Geist Mono Variable', ui-monospace, monospace;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .orientation {
+    top: 0;
+    z-index: 3;
+  }
+
+  .context {
+    top: 92px;
+    transform: translateX(-50%) scale(0.94);
+    z-index: 2;
+  }
+
+  .depth {
+    opacity: 0.72;
+    top: 176px;
+    transform: translateX(-50%) scale(0.88);
+    z-index: 1;
+  }
+
+  .key-row {
+    display: flex;
+    gap: 4px;
+  }
+
+  .plus {
+    align-items: center;
+    border: 1px solid var(--oriel-divider);
+    border-radius: 50%;
+    color: var(--oriel-text-muted);
+    display: flex;
+    height: 26px;
+    justify-content: center;
+    width: 26px;
+  }
+
+  .feedback-card {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1.14fr 0.86fr;
+    min-height: 580px;
+  }
+
+  .feedback-visual {
+    margin-left: -19%;
+    width: 128%;
+  }
+
+  .feedback-copy {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    padding: 52px 48px;
+  }
+
+  .feedback-copy .shortcut {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 10px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .showcase-card {
+      transition:
+        border-color 220ms ease,
+        transform 280ms var(--oriel-ease-out);
+    }
+
+    .showcase-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .depth-layer {
+      transition:
+        opacity 320ms var(--oriel-ease-out),
+        transform 450ms var(--oriel-ease-out);
+    }
+
+    .layers-card:hover .context {
+      transform: translateX(-50%) translateY(11px) scale(0.94);
+    }
+
+    .layers-card:hover .depth {
+      opacity: 1;
+      transform: translateX(-50%) translateY(24px) scale(0.88);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .feedback-card {
+      grid-template-columns: 1fr;
+      padding-top: 30px;
+    }
+
+    .feedback-visual {
+      margin-left: -9%;
+      width: 118%;
+    }
+
+    .feedback-copy {
+      padding-top: 24px;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .discovery {
+      padding-bottom: 100px;
+      padding-top: 100px;
+    }
+
+    .showcase-grid {
+      margin-top: 48px;
+    }
+
+    .showcase-card {
+      border-radius: 12px;
+      min-height: auto;
+    }
+
+    .card-copy,
+    .feedback-copy {
+      gap: 13px;
+      grid-template-columns: 28px 1fr;
+      padding: 25px 20px;
+    }
+
+    .card-copy > .shortcut {
+      grid-column: 2;
+      justify-self: start;
+    }
+
+    .command-visual {
+      margin-bottom: -12%;
+      padding: 0 12px;
+      transform: none;
+    }
+
+    .layers-card {
+      min-height: 480px;
+    }
+
+    .discovery-stack {
+      height: 285px;
+    }
+
+    .depth-layer {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 10px;
+      padding: 17px;
+    }
+
+    .depth-layer strong {
+      font-size: 10px;
+    }
+
+    .feedback-card {
+      padding-top: 20px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .showcase-card,
+    .depth-layer {
+      transition: none;
+    }
+  }
+</style>
