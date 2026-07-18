@@ -1,4 +1,10 @@
-import { filterPhotos, getActiveVersion, isAdjusted, type PhotoAsset } from '@oriel/domain';
+import {
+  filterPhotos,
+  formatLabelForFileName,
+  getActiveVersion,
+  isAdjusted,
+  type PhotoAsset,
+} from '@oriel/domain';
 import { Check, CircleSlash2, Star, X } from 'lucide-react';
 import {
   useEffect,
@@ -10,6 +16,7 @@ import {
 } from 'react';
 
 import { useCatalogStore } from '../../store/catalog-store';
+import { PhotoImage } from './PhotoImage';
 
 const COLUMN_GAP = 12;
 const ROW_GAP = 18;
@@ -160,13 +167,18 @@ export function LibraryGrid() {
                 tabIndex={selected.has(photo.id) ? 0 : -1}
               >
                 <div className="photo-thumbnail">
-                  <img
+                  <PhotoImage
                     alt=""
                     decoding="async"
                     draggable={false}
                     loading="lazy"
-                    src={photo.url}
+                    photo={photo}
                   />
+                  {photo.mediaKind === 'camera-raw' ? (
+                    <span className="raw-format-badge">
+                      {formatLabelForFileName(photo.fileName)}
+                    </span>
+                  ) : null}
                   <div className="photo-state">
                     {photo.flag === 'pick' ? (
                       <span className="flag-pick">

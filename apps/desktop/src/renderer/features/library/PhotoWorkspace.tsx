@@ -22,12 +22,7 @@ export function PhotoWorkspace() {
   return (
     <div className="photo-workspace" data-feedback="photo.workspace">
       <div className="photo-stage" data-feedback="photo.stage">
-        <PhotoCanvas
-          adjustments={version.adjustments}
-          fileName={photo.fileName}
-          original={showOriginal}
-          url={photo.url}
-        />
+        <PhotoCanvas adjustments={version.adjustments} original={showOriginal} photo={photo} />
         <ShortcutHint />
       </div>
       <CullingBar />

@@ -1,6 +1,7 @@
 import {
   cloneAdjustments,
   createEmptyCatalog,
+  type DecodedPhotoMetadata,
   DEFAULT_ADJUSTMENTS,
   filterPhotos,
   getActiveVersion,
@@ -60,6 +61,7 @@ interface CatalogStoreState {
   setCommandOpen: (open: boolean) => void;
   setExportOpen: (open: boolean) => void;
   dismissShortcutHint: () => void;
+  updatePhotoMetadata: (photoId: string, metadata: DecodedPhotoMetadata) => void;
   togglePanels: () => void;
   undo: () => void;
   redo: () => void;
@@ -447,6 +449,39 @@ export const useCatalogStore = create<CatalogStoreState>((set, get) => {
     setExportOpen: (exportOpen) => set({ exportOpen }),
     dismissShortcutHint: () =>
       applyCatalog({ ...get().catalog, shortcutHintDismissed: true }, false),
+    updatePhotoMetadata: (photoId, metadata) => {
+      const catalog = get().catalog;
+      const photo = catalog.photos.find((candidate) => candidate.id === photoId);
+      if (!photo) return;
+      const next = {
+        ...photo,
+        camera: metadata.camera || photo.camera,
+        capturedAt:
+          metadata.capturedAt === new Date(0).toISOString()
+            ? photo.capturedAt
+            : metadata.capturedAt,
+        height: metadata.height || photo.height,
+        lens: metadata.lens || photo.lens,
+        width: metadata.width || photo.width,
+      };
+      if (
+        next.camera === photo.camera &&
+        next.capturedAt === photo.capturedAt &&
+        next.height === photo.height &&
+        next.lens === photo.lens &&
+        next.width === photo.width
+      )
+        return;
+      applyCatalog(
+        {
+          ...catalog,
+          photos: catalog.photos.map((candidate) =>
+            candidate.id === photoId ? next : candidate,
+          ),
+        },
+        false,
+      );
+    },
     togglePanels: () =>
       applyCatalog({ ...get().catalog, panelsHidden: !get().catalog.panelsHidden }, false),
 

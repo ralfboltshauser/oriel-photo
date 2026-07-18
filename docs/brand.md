@@ -15,8 +15,9 @@ frames instead of a camera, lens, or aperture cliché.
 - Core promise: one coherent path from a local shoot to finished JPEGs, without an account or cloud
   dependency.
 
-The brand must never imply that RAW processing, professional color parity, Lightroom catalog
-migration, or production-grade releases exist before they do.
+The brand may state the exact RAW workflow and cameras backed by fixtures. It must never turn that
+evidence into a claim of broad camera certification, professional color parity, Lightroom catalog
+migration, or production-grade releases.
 
 ## Personality
 
@@ -34,13 +35,13 @@ where data lives.
 
 Use short, concrete language. Name the object and consequence.
 
-| Prefer                                        | Avoid                            | Reason                                          |
-| --------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| “Open a photo folder”                         | “Start your creative journey”    | The user knows the job they came to do.         |
-| “12 JPEGs written to Exports”                 | “Export successful”              | Feedback should answer what happened and where. |
-| “Originals remain untouched”                  | “Non-destructive workflow” alone | Explain the consequence, not only the category. |
-| “RAW decoding is not available in this build” | “Some files were skipped”        | Failure must be specific and actionable.        |
-| “Cancel after this file”                      | “Cancel” during an active write  | Set the correct expectation about timing.       |
+| Prefer                                | Avoid                            | Reason                                          |
+| ------------------------------------- | -------------------------------- | ----------------------------------------------- |
+| “Open a photo folder”                 | “Start your creative journey”    | The user knows the job they came to do.         |
+| “12 JPEGs written to Exports”         | “Export successful”              | Feedback should answer what happened and where. |
+| “Originals remain untouched”          | “Non-destructive workflow” alone | Explain the consequence, not only the category. |
+| “This A6700 ARW could not be decoded” | “Some files were skipped”        | Failure must be specific and actionable.        |
+| “Cancel after this file”              | “Cancel” during an active write  | Set the correct expectation about timing.       |
 
 ## Visual foundation
 

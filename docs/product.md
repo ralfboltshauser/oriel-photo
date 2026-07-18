@@ -46,7 +46,8 @@ These are user-facing contracts, not optional implementation details:
 
 - The native folder picker opens.
 - Oriel scans recursively and presents a review with counts for ready and skipped files.
-- Unsupported RAW files show their actual extension and the missing capability.
+- Recognized RAW files state that they use the early compatibility renderer. Decode errors name the
+  affected original instead of silently dropping it.
 - Cancel changes nothing. Confirm adds only the ready files and leaves originals where they are.
 
 **Recovery:** opening the same path again does not duplicate an already-cataloged file.
@@ -146,7 +147,7 @@ clearest plain-language label.
 
 | Objection                                 | Required answer before a broad v1 claim                                                                                                                                         |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| “Will it make my RAW files look as good?” | A measured RAW/color pipeline across representative cameras and displays. Not implemented.                                                                                      |
+| “Will it make my RAW files look as good?” | A measured RAW/color pipeline across representative cameras and displays. A real A6700 compatibility path exists; professional color evidence does not.                         |
 | “Can I bring my Lightroom work?”          | A migration assistant with a dry-run report, mapping rules, unsupported-item report, and rollback. Not implemented.                                                             |
 | “Will I lose my originals?”               | Referenced-in-place import, non-destructive recipes, explicit export-only writes, and tests of those contracts. Implemented for the current slice.                              |
 | “Is culling actually faster?”             | Keyboard parity, instant feedback, advance-on-action, stable filters, and measured large-shoot performance. Interaction and bounded rendering exist; scale evidence is pending. |
@@ -159,7 +160,8 @@ clearest plain-language label.
 - cloud accounts, sync, mobile clients, web galleries, and team review;
 - Photoshop round-trip or plugin ecosystem compatibility;
 - Lightroom catalog migration and XMP round-trip;
-- RAW decoding, camera/lens profiles, ICC-managed color, HDR, soft proofing, and print;
+- professional scene-linear RAW rendering, measured camera/lens profiles, ICC-managed color, HDR,
+  soft proofing, and print (a limited compatibility decoder exists);
 - local masks, healing, perspective correction, panorama/HDR merge, tethering, and maps;
 - AI selection, denoise, subject masks, generative tools, and face recognition;
 - full metadata reading/writing, advanced search, albums, source relinking, and user-managed catalog

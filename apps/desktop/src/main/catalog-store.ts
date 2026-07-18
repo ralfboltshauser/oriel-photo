@@ -2,13 +2,14 @@ import { app } from 'electron';
 import { mkdir, readFile, realpath, rename, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve, sep } from 'node:path';
 
-import type {
-  CatalogDocument,
-  CropRecipe,
-  PhotoAdjustments,
-  PhotoAsset,
-  PhotoVersion,
-  SourceRoot,
+import {
+  mediaKindForFileName,
+  type CatalogDocument,
+  type CropRecipe,
+  type PhotoAdjustments,
+  type PhotoAsset,
+  type PhotoVersion,
+  type SourceRoot,
 } from '@oriel/domain';
 import log from 'electron-log/main';
 
@@ -88,6 +89,7 @@ function isPhoto(value: unknown): value is PhotoAsset {
     isString(value.capturedAt) &&
     isString(value.camera) &&
     isString(value.lens) &&
+    ['bitmap', 'camera-raw'].includes(String(value.mediaKind)) &&
     ['unflagged', 'pick', 'reject'].includes(String(value.flag)) &&
     isFiniteNumber(rating) &&
     Number.isInteger(rating) &&
@@ -126,7 +128,7 @@ function isCatalogDocument(value: unknown): value is CatalogDocument {
   const photoIds = new Set(value.photos.map((photo) => photo.id));
   const sourceIds = new Set(value.sources.map((source) => source.id));
   return (
-    value.schemaVersion === 1 &&
+    value.schemaVersion === 2 &&
     typeof value.onboardingComplete === 'boolean' &&
     typeof value.shortcutHintDismissed === 'boolean' &&
     photoIds.size === value.photos.length &&
@@ -142,6 +144,23 @@ function isCatalogDocument(value: unknown): value is CatalogDocument {
     typeof value.panelsHidden === 'boolean' &&
     isString(value.lastOpenedAt)
   );
+}
+
+function migrateCatalogDocument(value: unknown): unknown {
+  if (!isRecord(value) || value.schemaVersion !== 1 || !Array.isArray(value.photos)) {
+    return value;
+  }
+  return {
+    ...value,
+    schemaVersion: 2,
+    photos: value.photos.map((photo) => {
+      if (!isRecord(photo) || !isString(photo.fileName)) return photo as unknown;
+      return {
+        ...photo,
+        mediaKind: mediaKindForFileName(photo.fileName) ?? 'bitmap',
+      };
+    }),
+  };
 }
 
 export class CatalogStore {
@@ -200,21 +219,22 @@ export class CatalogStore {
     return canonical;
   }
 
-  async isAllowedPath(path: string): Promise<boolean> {
+  async resolveAllowedPath(path: string): Promise<string | null> {
     let candidate: string;
     try {
       candidate = await realpath(path);
     } catch {
-      return false;
+      return null;
     }
-    return [...this.allowedRoots].some(
+    const allowed = [...this.allowedRoots].some(
       (root) => candidate === root || candidate.startsWith(`${root}${sep}`),
     );
+    return allowed ? candidate : null;
   }
 
   private async readCatalog(path: string): Promise<CatalogDocument> {
     const json = await readFile(path, 'utf8');
-    const parsed: unknown = JSON.parse(json);
+    const parsed = migrateCatalogDocument(JSON.parse(json) as unknown);
     if (!isCatalogDocument(parsed))
       throw new Error('Catalog schema or invariants are not recognized');
     return parsed;

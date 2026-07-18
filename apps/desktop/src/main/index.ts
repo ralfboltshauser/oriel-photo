@@ -3,6 +3,7 @@ import { join } from 'node:path';
 
 import log from 'electron-log/main';
 
+import { installAppProtocol } from './app-protocol';
 import { CatalogStore } from './catalog-store';
 import { registerIpc } from './ipc';
 import { installMediaProtocol, registerMediaScheme } from './media-protocol';
@@ -70,14 +71,14 @@ function createMainWindow(catalogStore: CatalogStore): BrowserWindow {
   window.webContents.on('will-navigate', (event, url) => {
     const allowed =
       (process.env.NODE_ENV === 'development' && url.startsWith('http://localhost:')) ||
-      url.startsWith('file://');
+      url.startsWith('oriel-app://app/');
     if (!allowed) event.preventDefault();
   });
 
   if (process.env.ELECTRON_RENDERER_URL) {
     void window.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
-    void window.loadFile(join(__dirname, '../renderer/index.html'));
+    void window.loadURL('oriel-app://app/index.html');
   }
   return window;
 }
@@ -89,6 +90,7 @@ if (!hasSingleInstanceLock) {
 } else
   void app.whenReady().then(() => {
     const catalogStore = new CatalogStore();
+    installAppProtocol();
     installMediaProtocol(catalogStore);
     registerIpc(catalogStore);
     session.defaultSession.setPermissionRequestHandler(

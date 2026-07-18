@@ -26,7 +26,7 @@ function assertTrustedSender(event: IpcMainInvokeEvent): void {
   const trusted =
     frame === event.sender.mainFrame &&
     ((developmentOrigin !== null && new URL(url).origin === developmentOrigin) ||
-      (developmentOrigin === null && url.startsWith('file://')));
+      (developmentOrigin === null && url.startsWith('oriel-app://app/')));
   if (!trusted) throw new Error(`Rejected IPC sender: ${url}`);
 }
 
@@ -172,6 +172,7 @@ export function registerIpc(catalogStore: CatalogStore): void {
       node: process.versions.node,
       platform: `${process.platform} ${process.arch}`,
       gpu: app.getGPUFeatureStatus().gpu_compositing,
+      rawDecoder: 'LibRaw 0.22.1 · WebAssembly',
     };
   });
 }

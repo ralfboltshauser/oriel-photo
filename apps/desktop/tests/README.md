@@ -9,6 +9,9 @@ every assertion:
   versions, copy/paste, undo, persistence, export, and automated accessibility checks.
 - `pnpm test:e2e:electron` builds the production app, launches it with an isolated `userData`
   directory, verifies the narrow preload API, writes a real catalog, and proves restart recovery.
+- `pnpm test:e2e:raw` fetches two CC0 Sony ILCE-6700 ARW fixtures by byte count and SHA-256,
+  exercises compressed and lossless-compressed thumbnails/previews, edits one, exports a full-size
+  JPEG, persists camera metadata, and proves the originals remain byte-identical.
 - `pnpm test:visual` compares the welcome, shortcuts, library, editor, command palette, export, and
   compact editor surfaces with committed Linux/Chromium baselines.
 

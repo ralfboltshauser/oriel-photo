@@ -29,5 +29,6 @@ reviewed from screenshots at 1440×960 and 1280×800. Preserve screenshot baseli
 
 ## Product truth
 
-Do not imply support for RAW decoding, Lightroom migration, AI masks, cloud sync, or production-scale
-catalogs until those flows exist and have fixtures/tests. Label prototype capabilities honestly.
+Do not imply broad RAW certification, professional RAW color parity, Lightroom migration, AI masks,
+cloud sync, or production-scale catalogs until those flows have appropriate fixtures/tests. RAW
+claims must name the exact support boundary documented in `docs/raw-support.md`.

@@ -51,7 +51,7 @@ test('@visual captures the critical product surfaces', async ({ page }) => {
   await page.getByRole('button', { name: 'Cancel', exact: true }).click();
   await page.getByRole('button', { name: 'Exit feedback mode' }).click();
 
-  await page.setViewportSize({ width: 1100, height: 740 });
+  await page.setViewportSize({ width: 1280, height: 800 });
   await waitForVisualReady(page);
   await expect(page).toHaveScreenshot('07-edit-compact.png');
 });

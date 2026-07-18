@@ -6,6 +6,7 @@ They are deliberately explicit about missing capabilities; roadmap intent is not
 - [Product scope and user flows](./product.md)
 - [Brand and interface system](./brand.md)
 - [Architecture boundaries](./architecture.md)
+- [RAW support, evidence, and rendering roadmap](./raw-support.md)
 - [Known limits](./known-limits.md)
 - [Testing and release gates](./testing.md)
 - [Fixture photography credits](./fixture-credits.md)

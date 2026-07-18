@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { desktopBridge } from '../../lib/bridge';
 import { renderPhotoToJpeg } from '../../lib/image-engine';
+import { getPhotoImageResource } from '../../lib/raw-engine';
 import { useCatalogStore } from '../../store/catalog-store';
 
 type ExportState = 'configure' | 'exporting' | 'complete' | 'error';
@@ -71,12 +72,21 @@ export function ExportDialog() {
         }
         const photo = targets[index]!;
         const version = getActiveVersion(photo);
-        const bytes = await renderPhotoToJpeg(
-          photo.url,
-          version.adjustments,
-          recipe === 'web' ? 2048 : null,
-          recipe === 'web' ? 0.86 : 0.94,
+        const source = await getPhotoImageResource(
+          photo,
+          recipe === 'web' ? 'preview' : 'export',
         );
+        let bytes: Uint8Array;
+        try {
+          bytes = await renderPhotoToJpeg(
+            source.url,
+            version.adjustments,
+            recipe === 'web' ? 2048 : null,
+            recipe === 'web' ? 0.86 : 0.94,
+          );
+        } finally {
+          source.release();
+        }
         const result = await desktopBridge.saveExport({
           photoId: photo.id,
           versionId: version.id,

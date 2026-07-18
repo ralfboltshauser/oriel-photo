@@ -1,41 +1,71 @@
-import type { PhotoAdjustments } from '@oriel/domain';
+import type { PhotoAdjustments, PhotoAsset } from '@oriel/domain';
 import { AlertCircle, LoaderCircle } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { loadImage, renderImage } from '../../lib/image-engine';
+import { getPhotoImageResource } from '../../lib/raw-engine';
+import { useCatalogStore } from '../../store/catalog-store';
 
 export function PhotoCanvas({
   adjustments,
-  fileName,
   original,
-  url,
+  photo,
 }: {
   adjustments: PhotoAdjustments;
-  fileName: string;
   original: boolean;
-  url: string;
+  photo: PhotoAsset;
 }) {
+  const updatePhotoMetadata = useCatalogStore((state) => state.updatePhotoMetadata);
   const hostRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const [sourcePhotoId, setSourcePhotoId] = useState('');
+  const [sourceSize, setSourceSize] = useState({ width: 0, height: 0 });
   const [size, setSize] = useState({ width: 1200, height: 760 });
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [errorMessage, setErrorMessage] = useState(
+    'Your edits are safe. Locate the source to continue.',
+  );
 
   useEffect(() => {
     let canceled = false;
+    let release: () => void = () => undefined;
+    setImage(null);
     setStatus('loading');
-    void loadImage(url)
+    setSourcePhotoId('');
+    setSourceSize({ width: 0, height: 0 });
+    const canvas = canvasRef.current;
+    canvas?.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
+    void getPhotoImageResource(
+      { id: photo.id, mediaKind: photo.mediaKind, url: photo.url },
+      'preview',
+    )
+      .then((resource) => {
+        release = resource.release;
+        if (photo.mediaKind === 'camera-raw') updatePhotoMetadata(photo.id, resource.metadata);
+        return loadImage(resource.url);
+      })
       .then((loaded) => {
         if (!canceled) {
           setImage(loaded);
+          setSourcePhotoId(photo.id);
+          setSourceSize({ height: loaded.naturalHeight, width: loaded.naturalWidth });
           setStatus('ready');
         }
       })
-      .catch(() => !canceled && setStatus('error'));
+      .catch((error) => {
+        if (!canceled) {
+          setErrorMessage(
+            error instanceof Error ? error.message : 'The original could not be decoded.',
+          );
+          setStatus('error');
+        }
+      });
     return () => {
       canceled = true;
+      release();
     };
-  }, [url]);
+  }, [photo.id, photo.mediaKind, photo.url, updatePhotoMetadata]);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -77,7 +107,13 @@ export function PhotoCanvas({
       ref={hostRef}
     >
       <canvas
-        aria-label={original ? `Original ${fileName}` : `Edited ${fileName}`}
+        aria-label={original ? `Original ${photo.fileName}` : `Edited ${photo.fileName}`}
+        data-media-kind={photo.mediaKind}
+        data-photo-id={photo.id}
+        data-render-status={status}
+        data-source-height={sourceSize.height}
+        data-source-photo-id={sourcePhotoId}
+        data-source-width={sourceSize.width}
         ref={canvasRef}
         role="img"
       />
@@ -90,8 +126,12 @@ export function PhotoCanvas({
       {status === 'error' ? (
         <div className="canvas-status error">
           <AlertCircle size={17} />
-          <strong>Original unavailable</strong>
-          <span>Your edits are safe. Locate the source to continue.</span>
+          <strong>
+            {photo.mediaKind === 'camera-raw'
+              ? 'RAW preview unavailable'
+              : 'Original unavailable'}
+          </strong>
+          <span>{errorMessage}</span>
         </div>
       ) : null}
       {original ? (

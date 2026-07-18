@@ -2,20 +2,16 @@ import { createHash } from 'node:crypto';
 import { readdir, stat } from 'node:fs/promises';
 import { basename, extname, join } from 'node:path';
 
-import type { ImportCandidate, ImportScanResult, SourceRoot } from '@oriel/domain';
+import {
+  BITMAP_EXTENSIONS,
+  CAMERA_RAW_EXTENSIONS,
+  mediaKindForFileName,
+  type ImportCandidate,
+  type ImportScanResult,
+  type SourceRoot,
+} from '@oriel/domain';
 
-const SUPPORTED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
-const KNOWN_UNSUPPORTED_RAW = new Set([
-  '.arw',
-  '.cr2',
-  '.cr3',
-  '.dng',
-  '.nef',
-  '.orf',
-  '.raf',
-  '.raw',
-  '.rw2',
-]);
+const SUPPORTED_EXTENSIONS = new Set<string>([...BITMAP_EXTENSIONS, ...CAMERA_RAW_EXTENSIONS]);
 const MAX_RELEVANT_FILES = 5_000;
 const METADATA_CONCURRENCY = 24;
 
@@ -53,8 +49,7 @@ async function collectFiles(root: string): Promise<CollectedFiles> {
       }
       if (!entry.isFile()) continue;
       const extension = extname(path).toLowerCase();
-      if (!SUPPORTED_EXTENSIONS.has(extension) && !KNOWN_UNSUPPORTED_RAW.has(extension))
-        continue;
+      if (!SUPPORTED_EXTENSIONS.has(extension)) continue;
       if (files.length >= MAX_RELEVANT_FILES) {
         truncated = true;
         break;
@@ -81,7 +76,8 @@ function stableSourceId(path: string): string {
 
 async function inspectFile(filePath: string, sourceId: string): Promise<ImportCandidate> {
   const extension = extname(filePath).toLowerCase();
-  const supported = SUPPORTED_EXTENSIONS.has(extension);
+  const mediaKind = mediaKindForFileName(filePath);
+  const supported = mediaKind !== null;
   try {
     const details = await stat(filePath);
     return {
@@ -94,10 +90,9 @@ async function inspectFile(filePath: string, sourceId: string): Promise<ImportCa
       height: 0,
       capturedAt: details.mtime.toISOString(),
       fileSize: details.size,
+      mediaKind: mediaKind ?? 'bitmap',
       supported,
-      reason: supported
-        ? undefined
-        : `${extension.slice(1).toUpperCase()} RAW decoding is not available in this build`,
+      reason: supported ? undefined : `${extension.slice(1).toUpperCase()} is not supported`,
     };
   } catch {
     return {
@@ -110,6 +105,7 @@ async function inspectFile(filePath: string, sourceId: string): Promise<ImportCa
       height: 0,
       capturedAt: new Date(0).toISOString(),
       fileSize: 0,
+      mediaKind: mediaKind ?? 'bitmap',
       supported: false,
       reason: 'Could not read file metadata',
     };

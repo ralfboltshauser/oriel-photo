@@ -20,6 +20,12 @@ export default defineConfig({
   renderer: {
     root: resolve('src/renderer'),
     plugins: [react()],
+    server: {
+      headers: {
+        'Cross-Origin-Embedder-Policy': 'require-corp',
+        'Cross-Origin-Opener-Policy': 'same-origin',
+      },
+    },
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer'),

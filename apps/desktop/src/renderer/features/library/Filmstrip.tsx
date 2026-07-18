@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { filterPhotos } from '@oriel/domain';
 
 import { useCatalogStore } from '../../store/catalog-store';
+import { PhotoImage } from './PhotoImage';
 
 export function Filmstrip() {
   const catalog = useCatalogStore((state) => state.catalog);
@@ -56,7 +57,7 @@ export function Filmstrip() {
           role="option"
           type="button"
         >
-          <img alt="" decoding="async" draggable={false} loading="lazy" src={photo.url} />
+          <PhotoImage alt="" decoding="async" draggable={false} loading="lazy" photo={photo} />
           {photo.flag === 'pick' ? (
             <span className="mini-pick">
               <Check size={9} />

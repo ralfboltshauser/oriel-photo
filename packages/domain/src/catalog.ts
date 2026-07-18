@@ -3,11 +3,45 @@ import type {
   CropRecipe,
   FilterMode,
   ImportCandidate,
+  MediaKind,
   PhotoAdjustments,
   PhotoAsset,
   PhotoVersion,
   SourceRoot,
 } from './types';
+
+export const BITMAP_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp'] as const;
+export const CAMERA_RAW_EXTENSIONS = [
+  '.arw',
+  '.cr2',
+  '.cr3',
+  '.dng',
+  '.nef',
+  '.orf',
+  '.raf',
+  '.raw',
+  '.rw2',
+] as const;
+
+const bitmapExtensionSet = new Set<string>(BITMAP_EXTENSIONS);
+const cameraRawExtensionSet = new Set<string>(CAMERA_RAW_EXTENSIONS);
+
+export function extensionOf(fileName: string): string {
+  const dot = fileName.lastIndexOf('.');
+  return dot < 0 ? '' : fileName.slice(dot).toLowerCase();
+}
+
+export function mediaKindForFileName(fileName: string): MediaKind | null {
+  const extension = extensionOf(fileName);
+  if (bitmapExtensionSet.has(extension)) return 'bitmap';
+  if (cameraRawExtensionSet.has(extension)) return 'camera-raw';
+  return null;
+}
+
+export function formatLabelForFileName(fileName: string): string {
+  const extension = extensionOf(fileName);
+  return extension ? extension.slice(1).toUpperCase() : 'Image';
+}
 
 export const DEFAULT_CROP: CropRecipe = {
   aspect: 'original',
@@ -65,6 +99,7 @@ export function createPhotoFromImport(candidate: ImportCandidate): PhotoAsset {
     capturedAt: candidate.capturedAt,
     camera: 'Metadata pending',
     lens: 'Metadata pending',
+    mediaKind: candidate.mediaKind,
     flag: 'unflagged',
     rating: 0,
     activeVersionId: version.id,
@@ -75,7 +110,7 @@ export function createPhotoFromImport(candidate: ImportCandidate): PhotoAsset {
 
 export function createEmptyCatalog(): CatalogDocument {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     onboardingComplete: false,
     shortcutHintDismissed: false,
     sources: [],

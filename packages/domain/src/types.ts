@@ -4,6 +4,7 @@ export type ViewMode = 'grid' | 'photo';
 export type FilterMode = 'all' | 'picks' | 'unflagged' | 'rejects' | 'rated';
 export type SaveStatus = 'saved' | 'saving' | 'error';
 export type SourceKind = 'demo' | 'folder';
+export type MediaKind = 'bitmap' | 'camera-raw';
 
 export interface CropRecipe {
   aspect: 'original' | '1:1' | '4:5' | '16:9';
@@ -47,11 +48,24 @@ export interface PhotoAsset {
   capturedAt: string;
   camera: string;
   lens: string;
+  mediaKind: MediaKind;
   flag: PhotoFlag;
   rating: 0 | 1 | 2 | 3 | 4 | 5;
   activeVersionId: string;
   versions: PhotoVersion[];
   online: boolean;
+}
+
+export interface DecodedPhotoMetadata {
+  aperture: number;
+  camera: string;
+  capturedAt: string;
+  focalLength: number;
+  height: number;
+  iso: number;
+  lens: string;
+  shutterSeconds: number;
+  width: number;
 }
 
 export interface SourceRoot {
@@ -65,7 +79,7 @@ export interface SourceRoot {
 }
 
 export interface CatalogDocument {
-  schemaVersion: 1;
+  schemaVersion: 2;
   onboardingComplete: boolean;
   shortcutHintDismissed: boolean;
   sources: SourceRoot[];
@@ -90,6 +104,7 @@ export interface ImportCandidate {
   height: number;
   capturedAt: string;
   fileSize: number;
+  mediaKind: MediaKind;
   supported: boolean;
   reason?: string;
 }

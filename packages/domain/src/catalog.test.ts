@@ -19,6 +19,7 @@ const candidate = {
   height: 1200,
   capturedAt: '2026-07-17T12:00:00.000Z',
   fileSize: 100,
+  mediaKind: 'bitmap',
   supported: true,
 } as const;
 

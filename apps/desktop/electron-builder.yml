@@ -9,6 +9,9 @@ directories:
 files:
   - out/**/*
   - package.json
+extraResources:
+  - from: ../../THIRD_PARTY_NOTICES.md
+    to: THIRD_PARTY_NOTICES.md
 extraMetadata:
   main: out/main/index.js
 linux:

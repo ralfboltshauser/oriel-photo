@@ -41,6 +41,8 @@ React renderer ───────── product UI and Canvas image recipes
 - serialized catalog disk persistence and recovery;
 - canonicalizing approved source roots and serving only contained local images through
   `oriel-media:`;
+- serving packaged renderer assets through `oriel-app:` with the isolation headers required by the
+  RAW WebAssembly worker;
 - collision-safe, temporary-then-rename export writes;
 - revealing files in the OS and gathering diagnostics;
 - validating feedback drafts and opening only Oriel's exact GitHub new-issue endpoint in the system
@@ -56,7 +58,8 @@ React renderer ───────── product UI and Canvas image recipes
 - onboarding and the Library → Select → Edit → Deliver flow;
 - ephemeral selection and interaction state;
 - reversible catalog operations and save scheduling;
-- the current Canvas 2D preview/export recipe;
+- the camera-RAW compatibility adapter, bounded decode queue, thumbnail/preview caches, and current
+  Canvas 2D preview/export recipe;
 - an explicit development-only browser bridge used by product and visual tests. A production preload
   failure stops with a visible recovery error instead of silently falling back to browser storage.
 
@@ -68,7 +71,8 @@ creation and permission requests are denied by default.
 
 `@oriel/domain` is the stable vocabulary shared across processes:
 
-- `CatalogDocument` is versioned (`schemaVersion: 1`).
+- `CatalogDocument` is versioned (`schemaVersion: 2`); schema 1 migrates media-kind classification on
+  read.
 - a `PhotoAsset` references one original and contains one or more `PhotoVersion` recipes;
 - flags and ratings belong to the photo; adjustments belong to a version;
 - `ImportScanResult` separates ready and skipped candidates;
@@ -84,7 +88,8 @@ objects, paths from `app.getPath`, and browser globals do not belong there.
 1. Renderer requests a folder review through the bridge.
 2. Main opens a native picker, canonicalizes the root, skips symbolic links, and scans recognized
    extensions with bounded metadata work and a 5,000-file review ceiling.
-3. Main returns supported and unsupported candidates without mutating the catalog.
+3. Main returns recognized and skipped candidates without mutating the catalog. For RAW, extension
+   recognition is intentionally not a guarantee that every camera/compression variant will decode.
 4. The user confirms.
 5. Domain logic merges new paths and the catalog store persists the document atomically.
 6. Main serves allowed originals through a custom protocol; arbitrary filesystem paths are rejected.
@@ -94,16 +99,19 @@ The original files are referenced in place. Import is not a backup operation.
 ### Edit
 
 1. The active photo version supplies a recipe.
-2. The same renderer module applies that recipe to a preview canvas.
-3. Continuous slider movement updates visual feedback immediately.
-4. Release commits a single history entry and schedules catalog persistence.
+2. Bitmap originals load directly. Camera RAW originals pass through the worker-based compatibility
+   adapter, which emits a half-size 8-bit sRGB preview and decoded metadata.
+3. The same renderer module applies the recipe to a preview canvas.
+4. Continuous slider movement updates visual feedback immediately.
+5. Release commits a single history entry and schedules catalog persistence.
 
 Edits never write to the original. The current recipe is an approximate sRGB Canvas implementation,
 not a professional RAW/color engine.
 
 ### Export
 
-1. Renderer produces JPEG bytes from the active version.
+1. Renderer produces JPEG bytes from the active version. A full-size RAW export uses a separate
+   full-resolution decode but the same Oriel recipe.
 2. A native picker issues an opaque, main-owned destination grant; the renderer never gains an
    arbitrary output path capability.
 3. The typed bridge sends bytes, the destination grant, and a sanitized proposed name to main.
@@ -145,7 +153,8 @@ The catalog is JSON under Electron's per-user application-data directory. Saves 
 written to unique temporary files, rotated through a last-known-good backup, and flushed before a
 normal window close. A single-instance lock prevents two Oriel processes from writing the same
 catalog. Runtime validation rejects malformed catalogs and the UI stops before overwriting an
-unrecoverable one. This is still not a complete archival story: explicit migrations, user-managed
+unrecoverable one. Schema 1 → 2 is the first explicit, unit-tested migration. This is still not a
+complete archival story: user-managed
 backup/restore, power-loss fault injection, large-catalog indexing, and documented sidecars remain
 future work.
 
@@ -166,10 +175,11 @@ update-channel policy, and install/uninstall testing before release claims.
 
 ## Where the architecture must grow
 
-The first major replacement boundary is the image engine. Professional competitiveness needs a
-native, deterministic pipeline for RAW decoding, demosaic, camera and lens profiles, working color
-spaces, ICC display transforms, GPU acceleration, metadata, and stable export. Keep that pipeline
-behind recipe and render contracts rather than leaking native types into product components.
+The first major replacement boundary is the image engine. The current LibRaw/WASM adapter unlocks
+real camera files but deliberately sits behind a photo-resource contract. Professional
+competitiveness still needs a deterministic scene-linear pipeline for demosaic, camera and lens
+profiles, working color spaces, ICC display transforms, GPU acceleration, metadata, and stable
+export. See [RAW support](./raw-support.md).
 
 The second is catalog scale and interoperability: indexes, source health/relinking, backups, XMP or a
 documented sidecar, and a migration report. Those should extend the domain model without granting the

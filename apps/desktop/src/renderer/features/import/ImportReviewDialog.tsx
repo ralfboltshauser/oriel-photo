@@ -8,6 +8,7 @@ export function ImportReviewDialog() {
   const scan = useCatalogStore((state) => state.importScan);
   const cancelImport = useCatalogStore((state) => state.cancelImport);
   const confirmImport = useCatalogStore((state) => state.confirmImport);
+  const rawCount = scan?.ready.filter((file) => file.mediaKind === 'camera-raw').length ?? 0;
 
   return (
     <Dialog.Root open={scan !== null} onOpenChange={(open) => !open && cancelImport()}>
@@ -48,6 +49,20 @@ export function ImportReviewDialog() {
                 <span>not supported</span>
               </div>
             </div>
+
+            {rawCount > 0 ? (
+              <div className="raw-import-note">
+                <CheckCircle2 size={15} />
+                <span>
+                  <strong>
+                    {rawCount} camera RAW {rawCount === 1 ? 'file' : 'files'}
+                  </strong>
+                  <small>
+                    Processed locally after import; original sensor files stay untouched.
+                  </small>
+                </span>
+              </div>
+            ) : null}
 
             {scan.skipped.length > 0 ? (
               <details className="import-warnings">

@@ -119,6 +119,34 @@
   margin-top: 19px;
 }
 
+.raw-import-note {
+  align-items: flex-start;
+  background: rgba(100, 205, 153, 0.055);
+  border: 1px solid rgba(100, 205, 153, 0.13);
+  border-radius: 7px;
+  color: var(--oriel-success);
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 11px 12px;
+}
+
+.raw-import-note > span {
+  display: grid;
+  gap: 3px;
+}
+
+.raw-import-note strong {
+  color: var(--oriel-text-secondary);
+  font-size: 10px;
+  font-weight: 590;
+}
+
+.raw-import-note small {
+  color: var(--oriel-text-muted);
+  font-size: 9px;
+}
+
 .import-stat {
   align-items: center;
   background: rgba(255, 255, 255, 0.025);

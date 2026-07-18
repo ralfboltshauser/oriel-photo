@@ -67,5 +67,9 @@ export default defineConfig({
       name: 'electron',
       testMatch: /electron\.spec\.ts/,
     },
+    {
+      name: 'raw',
+      testMatch: /raw\.spec\.ts/,
+    },
   ],
 });

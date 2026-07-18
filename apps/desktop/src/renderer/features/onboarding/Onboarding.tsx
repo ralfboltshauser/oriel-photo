@@ -91,7 +91,10 @@ export function Onboarding() {
               </Button>
             </div>
             <p className="onboarding-format-note">
-              This preview supports JPEG, PNG, and WebP. RAW support is not claimed yet.
+              <strong>JPEG · PNG · WebP · Camera RAW</strong>
+              <span>
+                Sony A6700 · Both compressed ARW modes verified · Early color baseline
+              </span>
             </p>
           </div>
         ) : (

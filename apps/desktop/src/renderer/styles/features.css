@@ -179,11 +179,21 @@
 }
 
 .onboarding-format-note {
+  align-items: center;
   color: var(--oriel-text-muted);
+  display: flex;
+  flex-direction: column;
   font-size: 9px;
+  gap: 2px;
   line-height: 1.45;
   margin: 13px 0 0;
   text-align: center;
+}
+
+.onboarding-format-note strong {
+  color: var(--oriel-text-secondary);
+  font-size: 10px;
+  font-weight: 520;
 }
 
 .onboarding-progress {
@@ -328,6 +338,34 @@
   object-fit: cover;
   transition: transform 180ms var(--oriel-ease-out);
   width: 100%;
+}
+
+.photo-thumbnail img[data-raw-status='waiting'],
+.photo-thumbnail img[data-raw-status='loading'],
+.filmstrip-item img[data-raw-status='waiting'],
+.filmstrip-item img[data-raw-status='loading'] {
+  opacity: 0.22;
+}
+
+.photo-thumbnail img[data-raw-status='error'],
+.filmstrip-item img[data-raw-status='error'] {
+  opacity: 0.08;
+}
+
+.raw-format-badge {
+  backdrop-filter: blur(7px);
+  background: rgba(11, 13, 12, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 4px;
+  color: var(--oriel-text-secondary);
+  font-family: 'Geist Mono Variable', monospace;
+  font-size: 8px;
+  font-weight: 620;
+  letter-spacing: 0.05em;
+  padding: 4px 5px;
+  position: absolute;
+  right: 7px;
+  top: 7px;
 }
 
 @media (hover: hover) and (pointer: fine) {

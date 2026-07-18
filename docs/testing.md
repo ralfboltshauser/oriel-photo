@@ -15,6 +15,7 @@ strategy prioritizes those contracts over raw test count.
 | Accessibility scan    | Semantics, focusability, and obvious violations                         | `pnpm test:a11y`                 |
 | Visual snapshots      | Stable key screens at standard and compact sizes                        | `pnpm test:visual`               |
 | Electron smoke        | Real preload bridge, persistence, protocols, and app launch             | desktop test target              |
+| RAW fixture test      | Real camera decode, metadata, edit/export, and unchanged source hashes  | `test:e2e:raw`                   |
 | Packaged smoke        | Install/launch/import/export/reopen the distributable                   | each release OS                  |
 
 Commands describe the intended repository interface; a command is not evidence of a passing gate
@@ -40,6 +41,9 @@ until it has run in the current revision.
     safe context → no issue is claimed to exist before browser submission.
 14. Navigate Feedback mode with arrows and Enter; Escape returns from composing to targeting and then
     exits; the ordinary product shortcuts do not leak through while the mode is active.
+15. Fetch hash-pinned camera fixtures → import both supported compression variants → render embedded
+    thumbnails and edit previews → persist decoded camera metadata → export a full-size JPEG → prove
+    the source hashes are unchanged.
 
 Feedback tests must treat privacy as a negative contract. Seed the page with a distinctive filename,
 filesystem path, DOM text, EXIF value, and catalog value, then assert that none appears in the target
@@ -68,6 +72,7 @@ capture and inspect at least:
 - command palette;
 - Feedback mode target highlight, composer, optional-context state, and browser-opened confirmation;
 - export configuration, progress, error, and completion;
+- a real camera-RAW preview and its loading/error states;
 - a compact window size and reduced-motion mode.
 
 Review hierarchy, photograph neutrality, clipped labels, selection visibility, focus, dialog context,
@@ -93,8 +98,10 @@ mean these release gates have passed.
 
 ## Current Linux evidence
 
-On 2026-07-17, the current tree passed formatting, ESLint, TypeScript, unit tests, four browser product
-flows, five automated WCAG surface scans, visual regression, the production Electron preload/restart
-test, and a packaged AppImage launch through Playwright. Electron Builder also produced AppImage and
-Debian artifacts. macOS and Windows remain configuration/CI targets rather than locally verified
-release claims.
+On 2026-07-18, the current tree passed formatting, ESLint, TypeScript, unit/dead-code checks, six
+browser product flows, six automated WCAG surface scans, visual regression, three production
+Electron boundary tests, and the real two-file A6700 RAW workflow. The same RAW workflow—including a
+6240×4168 JPEG export and unchanged source hashes—then passed against the packaged AppImage.
+Electron Builder produced AppImage and Debian artifacts containing the pinned WASM worker and
+third-party notice. macOS and Windows remain configuration targets rather than verified release
+claims.

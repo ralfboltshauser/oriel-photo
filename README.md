@@ -17,9 +17,12 @@ This repository is proving one honest vertical slice:
 7. point to an interface element and open a reviewable, prefilled GitHub feedback draft without
    giving Oriel GitHub credentials.
 
-The current image engine handles JPEG, PNG, and WebP with approximate Canvas-based adjustments. RAW
-decoding, professional color parity, Lightroom migration, and production releases do not exist yet.
-See [known limits](./docs/known-limits.md) before evaluating the build.
+The current image engine handles JPEG, PNG, WebP, and an early camera-RAW compatibility path. Real
+Sony ILCE-6700 compressed and lossless-compressed ARW fixtures complete import, preview, edit, and
+full-size JPEG export in Electron. RAW adjustments still operate on LibRaw's basic 8-bit sRGB output;
+professional color parity, Lightroom migration, and production releases do not exist yet. See the
+[RAW support contract](./docs/raw-support.md) and [known limits](./docs/known-limits.md) before
+evaluating the build.
 
 ## Repository
 
@@ -50,6 +53,7 @@ Useful feedback loops:
 ```bash
 pnpm quality
 pnpm test:e2e
+pnpm --filter @oriel/desktop test:e2e:raw
 pnpm test:visual
 pnpm build:desktop
 pnpm package:linux
@@ -68,6 +72,7 @@ itself create an issue.
 - [Product scope and user flows](./docs/product.md)
 - [Brand and interface system](./docs/brand.md)
 - [Architecture boundaries](./docs/architecture.md)
+- [RAW support, evidence, and rendering roadmap](./docs/raw-support.md)
 - [Known limits](./docs/known-limits.md)
 - [Testing and release gates](./docs/testing.md)
 - [Fixture photography credits](./docs/fixture-credits.md)
@@ -75,4 +80,5 @@ itself create an issue.
 ## License
 
 Code is declared AGPL-3.0-or-later. Fixture photography is separately sourced and credited; the code
-license does not relicense it. See [LICENSE](./LICENSE) for the complete license text.
+license does not relicense it. See [LICENSE](./LICENSE) and
+[third-party notices](./THIRD_PARTY_NOTICES.md).

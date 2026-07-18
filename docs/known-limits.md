@@ -7,11 +7,15 @@ evidence appropriate to its risk.
 
 ## Image support and quality
 
-- Folder import currently accepts JPEG/JPG, PNG, and WebP.
-- ARW, CR2, CR3, DNG, NEF, ORF, RAF, RAW, and RW2 are recognized only so the review can explain that
-  they are skipped. They are not decoded.
-- There is no RAW demosaic, camera profile, lens correction, highlight recovery model, denoise, or
-  sharpening pipeline.
+- Folder import accepts JPEG/JPG, PNG, WebP, ARW, CR2, CR3, DNG, NEF, ORF, RAF, RAW, and RW2.
+- RAW compatibility is provided by pinned LibRaw 0.22.1 WebAssembly. Sony ILCE-6700 compressed and
+  lossless-compressed ARW are verified with real fixtures; the other admitted extensions and camera
+  variants are not yet certified. A recognized extension can still fail during decode.
+- RAW previews use camera white balance/matrix, AHD demosaic, basic highlight handling, and 8-bit sRGB
+  output before Oriel's adjustments. This is a compatibility baseline, not a high-precision
+  scene-linear pipeline.
+- There is no measured camera-profile system, lens correction, production highlight reconstruction,
+  RAW-aware denoise, capture sharpening, or selectable rendering profile.
 - Adjustments use an approximate Canvas 2D sRGB pixel transform. Their numbers do not have Lightroom
   parity and are not scientifically calibrated.
 - There is no ICC display transform, wide-gamut working space, monitor soft proof, HDR, or output
@@ -25,8 +29,9 @@ evidence appropriate to its risk.
 
 ## Catalog and file management
 
-- Catalog storage is a schema-v1 JSON document with a rotating last-known-good backup and automatic
-  fallback. There is no user-facing backup browser, restore, repair, or migration tool.
+- Catalog storage is a schema-v2 JSON document with a rotating last-known-good backup, automatic
+  fallback, and a schema-1 media-kind migration. There is no user-facing backup browser, restore, or
+  repair tool.
 - Imported files are referenced in place and are not backed up. The app does not yet offer copy/move
   import, duplicate byte detection, or a backup verification workflow.
 - File identity uses path, size, and modification time during scan. Rename/move tracking and source
@@ -34,8 +39,9 @@ evidence appropriate to its risk.
 - Normal restart persistence, serialized atomic writes, close-time flush, and single-instance
   protection exist. Disk removal, path permission changes, total corruption of both catalog copies,
   and abrupt power-loss recovery still need broader destructive testing.
-- Imported width, height, camera, lens, capture-time, EXIF, IPTC, GPS, and orientation metadata are not
-  fully parsed. The current folder path uses filesystem timestamps and placeholder camera/lens text.
+- RAW decode persists width, height, camera, lens, and capture time when available. Bitmap metadata
+  and broader EXIF/IPTC/GPS/orientation ingestion remain incomplete; placeholders and filesystem
+  timestamps are still used where metadata is unavailable.
 - There are no albums, stacks, smart collections beyond basic flags/ratings, text search, face
   recognition, or advanced metadata filters.
 - Folder review is intentionally capped at 5,000 relevant files per import, the Library grid is
@@ -68,8 +74,9 @@ new shoot, not as the sole home for an established archive.
 ## Distribution and operations
 
 - Electron Builder has macOS, Windows, and Linux targets, but current local testing is Linux-only.
-- Linux AppImage and Debian artifacts build and the AppImage passes a packaged launch/preload smoke
-  test. This is not a signed release or a broad distro compatibility claim.
+- Linux AppImage and Debian artifacts build. The AppImage passes the complete two-file Sony A6700
+  fixture workflow through full-size export. This is not a signed release or a broad distro
+  compatibility claim.
 - Signed/notarized releases, auto-update, reproducible-build evidence, release channels, crash report
   consent, telemetry policy, and vulnerability response process are not established.
 - The application identity, working name, icons, domain, and store metadata are not legally cleared.
@@ -99,5 +106,6 @@ new shoot, not as the sole home for an established archive.
 ## Deliberate non-goals for the first slice
 
 Cloud sync, accounts, mobile apps, web galleries, team collaboration, Photoshop round-trip, tethering,
-printing, maps, and generative AI are outside the current target. Their absence is deliberate; RAW,
-color, migration, source recovery, and scale are missing fundamentals rather than optional polish.
+printing, maps, and generative AI are outside the current target. Their absence is deliberate;
+professional RAW color, migration, source recovery, and scale are still missing fundamentals rather
+than optional polish.

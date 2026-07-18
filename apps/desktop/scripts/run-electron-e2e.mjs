@@ -1,6 +1,7 @@
 import { spawnSync } from 'node:child_process';
 
-const playwrightArguments = ['test', '--project=electron'];
+const project = process.env.ORIEL_E2E_PROJECT || 'electron';
+const playwrightArguments = ['test', `--project=${project}`];
 const command = process.platform === 'linux' ? 'xvfb-run' : 'playwright';
 const argumentsForPlatform =
   process.platform === 'linux'

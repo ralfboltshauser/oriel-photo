@@ -19,7 +19,7 @@ test.describe('local photo workflow', () => {
     await expect(page.getByText('Original files are never changed')).toBeVisible();
     await expect(page.getByText('Works entirely offline')).toBeVisible();
     await expect(page.getByText('Every edit is reversible')).toBeVisible();
-    await expect(page.getByText(/RAW support is not claimed yet/)).toBeVisible();
+    await expect(page.getByText(/Both compressed ARW modes verified/)).toBeVisible();
 
     await page.getByTestId('try-sample').click();
     await expect(page.getByText('Pick', { exact: true })).toBeVisible();

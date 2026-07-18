@@ -28,7 +28,7 @@ async function makeShoot(): Promise<string> {
 }
 
 describe('folder scanning', () => {
-  it('recurses, separates truthful preview support, and ignores unrelated files', async () => {
+  it('recurses, classifies bitmap and camera RAW files, and ignores unrelated files', async () => {
     const root = await makeShoot();
     const result = await scanFolder(root);
 
@@ -36,19 +36,18 @@ describe('folder scanning', () => {
       kind: 'folder',
       name: expect.stringMatching(/^oriel-import-/),
       path: root,
-      photoCount: 2,
+      photoCount: 3,
     });
-    expect(result.ready.map((photo) => photo.fileName).sort()).toEqual([
-      'frame-01.JPG',
-      'frame-02.webp',
-    ]);
+    expect(result.ready.map((photo) => photo.fileName).sort()).toEqual(
+      ['frame-01.JPG', 'frame-03.CR3', 'frame-02.webp'].sort(),
+    );
     expect(result.ready.every((photo) => photo.supported)).toBe(true);
-    expect(result.skipped).toHaveLength(1);
-    expect(result.skipped[0]).toMatchObject({
+    expect(result.ready.find((photo) => photo.fileName === 'frame-03.CR3')).toMatchObject({
       fileName: 'frame-03.CR3',
-      supported: false,
-      reason: 'CR3 RAW decoding is not available in this build',
+      mediaKind: 'camera-raw',
+      supported: true,
     });
+    expect(result.skipped).toHaveLength(0);
     expect(result.warnings).toEqual([]);
     expect(result.truncated).toBe(false);
   });

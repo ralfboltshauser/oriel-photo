@@ -12,3 +12,4 @@ Thumbs.db
 apps/desktop/.oriel-test-data/
 apps/desktop/screenshots/current/
 .vercel
+.cache/

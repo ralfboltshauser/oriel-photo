@@ -59,6 +59,7 @@ export function createDemoPhotos(assetUrls: Record<string, string>): PhotoAsset[
       capturedAt: seed.capturedAt,
       camera: seed.camera,
       lens: seed.lens,
+      mediaKind: 'bitmap',
       flag: index === 1 || index === 8 ? 'pick' : index === 6 ? 'reject' : 'unflagged',
       rating: index === 1 ? 5 : index === 8 ? 4 : 0,
       activeVersionId: version.id,

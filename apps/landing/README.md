@@ -31,7 +31,8 @@ Select capture.
 
 The site is an honest early-build story, not a download page. Keep these constraints intact:
 
-- Never imply RAW, professional color, Lightroom migration, production stability, or signed
+- RAW claims must match the fixture-backed contract in `docs/raw-support.md`. Never imply broad
+  camera certification, professional color, Lightroom migration, production stability, or signed
   cross-platform releases before there is evidence.
 - Refer to Lightroom only for factual product-fit comparison. Do not use Adobe logos, screenshots,
   icons, or trade dress; preserve the attribution and independence disclaimer.

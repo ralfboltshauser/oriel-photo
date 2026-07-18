@@ -2,18 +2,11 @@ import { Button } from '@oriel/ui';
 import { AlertTriangle, Check, FileImage, LoaderCircle, Send, ShieldCheck } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
+import { isPhotoOriginalOnline } from '../../lib/raw-engine';
 import { useCatalogStore } from '../../store/catalog-store';
+import { PhotoImage } from '../library/PhotoImage';
 
 type Availability = 'checking' | 'ready' | 'missing';
-
-function canLoadImage(url: string): Promise<boolean> {
-  return new Promise((resolve) => {
-    const image = new Image();
-    image.onload = () => resolve(true);
-    image.onerror = () => resolve(false);
-    image.src = url;
-  });
-}
 
 export function DeliveryWorkspace() {
   const catalog = useCatalogStore((state) => state.catalog);
@@ -28,7 +21,7 @@ export function DeliveryWorkspace() {
   useEffect(() => {
     let canceled = false;
     setAvailability('checking');
-    void Promise.all(picks.map((photo) => canLoadImage(photo.url))).then((results) => {
+    void Promise.all(picks.map((photo) => isPhotoOriginalOnline(photo))).then((results) => {
       if (!canceled) setAvailability(results.every(Boolean) ? 'ready' : 'missing');
     });
     return () => {
@@ -60,7 +53,7 @@ export function DeliveryWorkspace() {
           </div>
           <div className="delivery-thumbs">
             {picks.slice(0, 6).map((photo) => (
-              <img alt="" decoding="async" key={photo.id} loading="lazy" src={photo.url} />
+              <PhotoImage alt="" decoding="async" key={photo.id} loading="lazy" photo={photo} />
             ))}
             {picks.length === 0 ? (
               <p>

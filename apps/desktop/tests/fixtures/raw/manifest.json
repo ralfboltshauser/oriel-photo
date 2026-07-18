@@ -1,0 +1,22 @@
+{
+  "license": "CC0-1.0",
+  "source": "https://raw.pixls.us/",
+  "fixtures": [
+    {
+      "fileName": "sony-a6700-compressed.arw",
+      "camera": "Sony ILCE-6700",
+      "mode": "14-bit compressed RAW",
+      "bytes": 34148352,
+      "sha256": "501666fd94cbc28176e9c03a40c1d8121319df6542bfcbef0ffcfebeb04a32bf",
+      "url": "https://raw.pixls.us/getfile.php/6735/nice/Sony%20-%20ILCE-6700%20-%2014bit%20(3:2).ARW"
+    },
+    {
+      "fileName": "sony-a6700-lossless-compressed.arw",
+      "camera": "Sony ILCE-6700",
+      "mode": "14-bit lossless compressed RAW",
+      "bytes": 43720704,
+      "sha256": "dc3e2ed22f46fcef778553767e0703bc37cfb043f107afe2d7e6e4dbca34200a",
+      "url": "https://raw.pixls.us/getfile.php/6736/nice/Sony%20-%20ILCE-6700%20-%2014bit%20(4:3).ARW"
+    }
+  ]
+}
